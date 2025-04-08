@@ -56,3 +56,6 @@ $route['translate_uri_dashes'] = FALSE;
 $route['admin'] = 'administrator/Admin_dashboard_controller/index';
 $route['admin/login'] = 'administrator/Admin_auth_controller/index';
 $route['admin/logout'] = 'administrator/Admin_auth_controller/logout';
+
+#admin produk
+$route['admin/kategori'] = 'administrator/Kategori_controller/index';
