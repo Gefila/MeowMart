@@ -48,7 +48,7 @@
                     <?= $kategori['deskripsi']; ?>
                   </td>
                   <td>
-                    <a type="button" class="btn btn-primary btn-sm" href="<?= base_url('admin/kategori/ubah/')?>"><i class="fa fa-edit"></i> Edit</a>
+                    <a type="button" class="btn btn-primary btn-sm" href="<?= base_url('admin/kategori/ubah/')?><?= $kategori['id_kategori'] ?>"><i class="fa fa-edit"></i> Edit</a>
                     <a type="button" class="btn btn-danger btn-sm" href="<?= base_url('admin/kategori/hapus/')?><?= $kategori['id_kategori'] ?>"><i class="fa fa-trash"></i> Delete</a>
                   </td>
                 <?php $no++;
