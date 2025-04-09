@@ -48,8 +48,8 @@
                     <?= $kategori['deskripsi']; ?>
                   </td>
                   <td>
-                    <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</button>
-                    <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>
+                    <a type="button" class="btn btn-primary btn-sm" href="<?= base_url('admin/kategori/ubah/')?>"><i class="fa fa-edit"></i> Edit</a>
+                    <a type="button" class="btn btn-danger btn-sm" href="<?= base_url('admin/kategori/hapus/')?><?= $kategori['id_kategori'] ?>"><i class="fa fa-trash"></i> Delete</a>
                   </td>
                 <?php $no++;
               endforeach; ?>

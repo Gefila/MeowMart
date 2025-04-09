@@ -32,12 +32,12 @@
   						<textarea class="form-control" rows="10" col="30" name="deskripsi_kategori" placeholder="Masukkan Deskripsi Kategori"></textarea>
   					</div>
   					<div>
-  						<button class="btn btn-primary">
-  							<i class="fa fa-plus"></i> Tambah Kategori
-  						</button>
-  						<a href="<?= base_url('admin/kategori') ?>" class="btn btn-danger">
-  							<i class="fa fa-arrow-left"></i> Kembali
-  						</a>
+						  <a href="<?= base_url('admin/kategori') ?>" class="btn btn-danger">
+							  <i class="fa fa-arrow-left"></i> Kembali
+							</a>
+							<button class="btn btn-primary">
+								<i class="fa fa-plus"></i> Tambah Kategori
+							</button>
   					</div>
   				</div>
   			</form>

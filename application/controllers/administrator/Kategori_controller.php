@@ -82,4 +82,50 @@ class Kategori_controller extends CI_Controller
         }
         redirect('admin/kategori');
     }
+
+    public function hapus_kategori($id){
+        $kategori = $this->Produk_kategori_model->get_by_id($id);
+        if($kategori){
+            $hapus = $this->Produk_kategori_model->hapus($id);
+            if($hapus){
+                $this->session->set_flashdata('message', '
+                <script>
+                    Swal.fire({
+                        icon: "success",
+                        title: "Berhasil",
+                        text: "Kategori berhasil dihapus",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+                ');
+            }else{
+                $this->session->set_flashdata('message', '
+                <script>
+                    Swal.fire({
+                        icon: "error",
+                        title: "Gagal",
+                        text: "Kategori gagal dihapus",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+                ');
+            }
+            redirect('admin/kategori');
+        }else{
+            $this->session->set_flashdata('message', '
+            <script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Gagal",
+                    text: "Kategori tidak ditemukan",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            </script>
+            ');
+            redirect('admin/kategori');
+        }
+    }
 }
