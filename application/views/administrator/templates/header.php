@@ -16,6 +16,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="<?=base_url('assets/')?>plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?=base_url('assets/')?>dist/css/adminlte.min.css">
+    <script src="<?=base_url('assets/')?>plugins/sweetalert2/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
