@@ -8,4 +8,9 @@ class Produk_kategori_model extends CI_Model{
         $query = $this->db->get($this->_table);
         return $query->result_array();
     }
+
+    public function tambah($data){
+        $this->db->insert($this->_table, $data);
+        return ($this->db->affected_rows() != 1) ? false : true;
+    }
 }

@@ -57,5 +57,6 @@ $route['admin'] = 'administrator/Admin_dashboard_controller/index';
 $route['admin/login'] = 'administrator/Admin_auth_controller/index';
 $route['admin/logout'] = 'administrator/Admin_auth_controller/logout';
 
-#admin produk
+#admin kategori
 $route['admin/kategori'] = 'administrator/Kategori_controller/index';
+$route['admin/kategori/tambah'] = 'administrator/Kategori_controller/tambah_kategori';
