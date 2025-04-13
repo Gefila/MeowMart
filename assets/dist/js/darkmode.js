@@ -2,16 +2,22 @@ document.addEventListener("DOMContentLoaded", function () {
 	const toggle = document.getElementById("dark-mode-toggle");
 	const icon = document.getElementById("dark-mode-icon");
 	const body = document.body;
+	const sidebar = document.getElementById("sidebar");
 
 	function applyTheme(theme) {
 		if (theme === "dark") {
 			body.classList.add("dark-mode");
 			icon.classList.remove("fa-moon");
 			icon.classList.add("fa-sun");
+			console.log("Dark mode applied");
+			sidebar.classList.add("sidebar-dark-primary");
+			sidebar.classList.remove("sidebar-light-primary");
 		} else {
 			body.classList.remove("dark-mode");
 			icon.classList.remove("fa-sun");
 			icon.classList.add("fa-moon");
+			sidebar.classList.remove("sidebar-dark-primary");
+			sidebar.classList.add("sidebar-light-primary");
 		}
 	}
 
