@@ -1,0 +1,90 @@
+  /* Background utama */
+  .dark-mode {
+    background-color: #121212 !important;
+    color: #e0e0e0 !important;
+  }
+
+  /* Header dan sidebar */
+  .dark-mode .main-header {
+    background-color: #1f1f1f !important;
+    border-bottom: 1px solid #333;
+  }
+
+  .dark-mode .main-sidebar {
+    background-color: #1a1a1a !important;
+    border-right: 1px solid #333;
+  }
+
+  /* Sidebar links */
+  .dark-mode .nav-sidebar > .nav-item > .nav-link {
+    color: #c7c7c7;
+  }
+
+  .dark-mode .nav-sidebar > .nav-item > .nav-link.active {
+    background-color: #007bff !important;
+    color: #fff;
+  }
+
+  /* Konten utama */
+  .dark-mode .content-wrapper {
+    background-color: #181818 !important;
+    color: #e0e0e0;
+  }
+
+  /* Card background */
+  .dark-mode .card {
+    background-color: #222 !important;
+    border-color: #333 !important;
+    color: #e0e0e0;
+  }
+
+  /* Button khusus (opsional) */
+  .dark-mode .btn-primary {
+    background-color: #0056b3;
+    border-color: #004ba0;
+  }
+
+  /* Ubah warna teks navbar di dark mode */
+.dark-mode .main-header {
+    color: #ffffff !important;
+  }
+  
+  .dark-mode .main-header .nav-link,
+  .dark-mode .main-header .navbar-nav .nav-link,
+  .dark-mode .main-header .navbar-nav .nav-item .nav-link {
+    color: #f0f0f0 !important;
+  }
+  
+  .dark-mode .main-header .nav-link:hover {
+    color: #ffffff !important;
+  }
+  
+  /* Navbar gaya modern (YouTube/Spotify-style) saat dark mode */
+.dark-mode .main-header {
+    background-color: #181818 !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid #2c2c2c;
+  }
+  
+  /* Teks & ikon navbar */
+  .dark-mode .main-header .nav-link,
+  .dark-mode .main-header .navbar-nav .nav-link,
+  .dark-mode .main-header i {
+    color: #ffffff !important;
+    transition: color 0.3s ease;
+  }
+  
+  /* Hover effect */
+  .dark-mode .main-header .nav-link:hover,
+  .dark-mode .main-header .navbar-nav .nav-link:hover {
+    color: #1db954 !important; /* hijau neon ala Spotify */
+  }
+  
+  /* (Opsional) Navbar brand text/logo */
+  .dark-mode .brand-link {
+    background-color: #111 !important;
+    color: #fff !important;
+    border-bottom: 1px solid #2c2c2c;
+  }
+  

@@ -21,10 +21,10 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-        <div class="card-body p-0">
-          <a class="btn btn-primary" href="<?= base_url('admin/kategori/tambah') ?>">
-            <i class="fa fa-plus"></i> Tambah Kategori
-          </a>
+        <a class="btn btn-primary mb-2" href="<?= base_url('admin/kategori/tambah') ?>">
+          <i class="fa fa-plus"></i> Tambah Kategori
+        </a>
+        <div class="card-body p-0 card">
           <?php if ($this->session->flashdata('message')) : ?>
             <?= $this->session->flashdata('message'); ?>
           <?php endif; ?>
