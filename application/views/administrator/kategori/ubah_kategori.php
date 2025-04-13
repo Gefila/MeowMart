@@ -33,6 +33,9 @@
   						</textarea>
   					</div>
   					<div>
+					  	<a href="<?= base_url('admin/kategori') ?>" class="btn btn-danger">
+							  <i class="fa fa-arrow-left"></i> Kembali
+						</a>
   						<button class="btn btn-primary">
   							<i class="fa fa-edit"></i> Edit Kategori
   						</button>

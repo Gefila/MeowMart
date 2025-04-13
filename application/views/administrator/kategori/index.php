@@ -21,10 +21,10 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-        <div class="card-body p-0">
-          <a class="btn btn-primary" href="<?= base_url('admin/kategori/tambah') ?>">
-            <i class="fa fa-plus"></i> Tambah Kategori
-          </a>
+        <a class="btn btn-primary mb-2" href="<?= base_url('admin/kategori/tambah') ?>">
+          <i class="fa fa-plus"></i> Tambah Kategori
+        </a>
+        <div class="card-body p-0 card">
           <?php if ($this->session->flashdata('message')) : ?>
             <?= $this->session->flashdata('message'); ?>
           <?php endif; ?>
@@ -48,8 +48,8 @@
                     <?= $kategori['deskripsi']; ?>
                   </td>
                   <td>
-                    <a type="button" class="btn btn-primary btn-sm" href="<?= base_url('admin/kategori/ubah/')?><?= $kategori['id_kategori'] ?>"><i class="fa fa-edit"></i> Edit</a>
-                    <a type="button" class="btn btn-danger btn-sm" href="<?= base_url('admin/kategori/hapus/')?><?= $kategori['id_kategori'] ?>"><i class="fa fa-trash"></i> Delete</a>
+                    <a type="button" class="btn btn-primary btn-sm" href="<?= base_url('admin/kategori/ubah/') ?><?= $kategori['id_kategori'] ?>"><i class="fa fa-edit"></i> Edit</a>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteKategori(<?= $kategori['id_kategori']; ?>,'<?= $kategori['nama']; ?>')"><i class="fa fa-trash"></i> Delete</button>
                   </td>
                 <?php $no++;
               endforeach; ?>
@@ -63,3 +63,21 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  <script>
+    function deleteKategori(id, kategori = 'malas') {
+      Swal.fire({
+        icon: "warning",
+        title: `Apakah anda yakin ingin menghapus kategori ${kategori} ?`,
+        text: "Kategori ini akan dihapus",
+        showConfirmButton: true,
+        confirmButtonText: "Ya, hapus!",
+        showCancelButton: true,
+        cancelButtonText: "Tidak, batalkan!",
+        confirmButtonColor: "#3085d6",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "<?= base_url('admin/kategori/hapus/') ?>" + id;
+        }
+      });
+    }
+  </script>
