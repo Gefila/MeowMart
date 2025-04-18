@@ -21,7 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="<?= base_url('assets/') ?>plugins/sweetalert2/dist/sweetalert2.all.min.js"></script>
 </head>
 
-<body class="hold-transition sidebar-mini dark-mode">
+<body class="hold-transition sidebar-mini dark-mode layout-navbar-fixed layout-fixed">
     <div class="wrapper">
 
         <!-- Navbar -->

@@ -35,8 +35,16 @@
               <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                   <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+                  <li class="nav-item">
+                      <a href="<?= base_url()?>admin" class="nav-link <?= ($this->uri->segment(1) == 'admin' && $this->uri->segment(2) == NULL) ? 'active' : '' ?>">
+                          <i class="nav-icon fas fa-chart-pie"></i>
+                          <p>
+                              Dashboard
+                          </p>
+                      </a>
+                  </li>
                   <li class="nav-item menu-open">
-                      <a href="#" class="nav-link <?= ($this->uri->segment(1) == 'admin') ? 'active' : '' ?>">
+                      <a href="#" class="nav-link <?= ($this->uri->segment(1) == 'admin' && $this->uri->segment(2) !== NULL) ? 'active' : '' ?>">
                           <i class="nav-icon fas fa-tachometer-alt"></i>
                           <p>
                               Master
@@ -54,12 +62,6 @@
                               <a href="<?= base_url() ?>admin/produk" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>Produk</p>
-                              </a>
-                          </li>
-                          <li class="nav-item">
-                              <a href="#" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>Inactive Page</p>
                               </a>
                           </li>
                       </ul>
