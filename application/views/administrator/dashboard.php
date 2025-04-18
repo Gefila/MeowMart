@@ -1,86 +1,82 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <div class="content-header">
-          <div class="container-fluid">
-              <div class="row mb-2">
-                  <div class="col-sm-6">
-                      <h1 class="m-0">Starter Page</h1>
-                  </div><!-- /.col -->
-                  <div class="col-sm-6">
-                      <ol class="breadcrumb float-sm-right">
-                          <li class="breadcrumb-item"><a href="#">Home</a></li>
-                          <li class="breadcrumb-item active">Starter Page</li>
-                      </ol>
-                  </div><!-- /.col -->
-              </div><!-- /.row -->
-          </div><!-- /.container-fluid -->
-      </div>
-      <!-- /.content-header -->
+  	<!-- Content Header (Page header) -->
+  	<div class="content-header">
+  		<div class="container-fluid">
+  			<div class="row mb-2">
+  				<div class="col-sm-6">
+  					<h1 class="m-0">Dashboard</h1>
+  				</div><!-- /.col -->
+  				<div class="col-sm-6">
+  					<ol class="breadcrumb float-sm-right">
+  						<li class="breadcrumb-item"><a href="<?= base_url('admin') ?>">Admin</a></li>
+  						<li class="breadcrumb-item active">dashboard</li>
+  					</ol>
+  				</div><!-- /.col -->
+  			</div><!-- /.row -->
+  		</div><!-- /.container-fluid -->
+  	</div>
+  	<!-- /.content-header -->
 
-      <!-- Main content -->
-      <div class="content">
-          <div class="container-fluid">
-              <div class="row">
-                  <div class="col-lg-6">
-                      <div class="card">
-                          <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-
-                              <p class="card-text">
-                                  Some quick example text to build on the card title and make up the bulk of the card's
-                                  content.
-                              </p>
-
-                              <a href="#" class="card-link">Card link</a>
-                              <a href="#" class="card-link">Another link</a>
-                          </div>
-                      </div>
-
-                      <div class="card card-primary card-outline">
-                          <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-
-                              <p class="card-text">
-                                  Some quick example text to build on the card title and make up the bulk of the card's
-                                  content.
-                              </p>
-                              <a href="#" class="card-link">Card link</a>
-                              <a href="#" class="card-link">Another link</a>
-                          </div>
-                      </div><!-- /.card -->
-                  </div>
-                  <!-- /.col-md-6 -->
-                  <div class="col-lg-6">
-                      <div class="card">
-                          <div class="card-header">
-                              <h5 class="m-0">Featured</h5>
-                          </div>
-                          <div class="card-body">
-                              <h6 class="card-title">Special title treatment</h6>
-
-                              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                              <a href="#" class="btn btn-primary">Go somewhere</a>
-                          </div>
-                      </div>
-
-                      <div class="card card-primary card-outline">
-                          <div class="card-header">
-                              <h5 class="m-0">Featured</h5>
-                          </div>
-                          <div class="card-body">
-                              <h6 class="card-title">Special title treatment</h6>
-
-                              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                              <a href="#" class="btn btn-primary">Go somewhere</a>
-                          </div>
-                      </div>
-                  </div>
-                  <!-- /.col-md-6 -->
-              </div>
-              <!-- /.row -->
-          </div><!-- /.container-fluid -->
-      </div>
-      <!-- /.content -->
+  	<!-- Main Content -->
+  	<section class="content">
+  		<div class="container-fluid">
+  			<div class="row">
+  				<!-- Total Penjualan -->
+  				<div class="col-lg-3 col-6">
+  					<div class="small-box bg-success">
+  						<div class="inner">
+  							<h3>Rp15 Jt</h3>
+  							<p>Total Penjualan</p>
+  						</div>
+  						<div class="icon">
+  							<i class="fas fa-coins"></i>
+  						</div>
+  						<a href="#" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+  					</div>
+  				</div>
+  				<!-- Jumlah Produk -->
+  				<div class="col-lg-3 col-6">
+  					<div class="small-box bg-info">
+  						<div class="inner">
+  							<h3>120</h3>
+  							<p>Jumlah Produk</p>
+  						</div>
+  						<div class="icon">
+  							<i class="fas fa-gamepad"></i>
+  						</div>
+  						<a href="#" class="small-box-footer">Lihat Produk <i class="fas fa-arrow-circle-right"></i></a>
+  					</div>
+  				</div>
+  				<!-- Jumlah Pelanggan -->
+  				<div class="col-lg-3 col-6">
+  					<div class="small-box bg-warning">
+  						<div class="inner">
+  							<h3>230</h3>
+  							<p>Pelanggan Terdaftar</p>
+  						</div>
+  						<div class="icon">
+  							<i class="fas fa-users"></i>
+  						</div>
+  						<a href="#" class="small-box-footer">Lihat Pelanggan <i class="fas fa-arrow-circle-right"></i></a>
+  					</div>
+  				</div>
+  				<!-- Produk Terlaris -->
+  				<div class="col-lg-3 col-6">
+  					<div class="small-box bg-danger">
+  						<div class="inner">
+  							<h3>PS5</h3>
+  							<p>Produk Terlaris</p>
+  						</div>
+  						<div class="icon">
+  							<i class="fas fa-star"></i>
+  						</div>
+  						<a href="#" class="small-box-footer">Lihat Detail <i class="fas fa-arrow-circle-right"></i></a>
+  					</div>
+  				</div>
+  			</div>
+  		</div>
+  	</section>
+  	<!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
