@@ -1,0 +1,132 @@
+<?php
+
+defined('BASEPATH') or exit('No direct script access allowed');
+
+class Produk_controller extends CI_Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
+        is_admin_logged_in();
+        $this->load->model('Produk_model');
+        $this->load->model('Produk_kategori_model');
+        $this->load->model('Produk_gambar_model');
+    }
+
+    public function index()
+    {
+        $data['title'] = 'Gefila Store - Produk';
+        $data['admin'] = array(
+            'id' => $this->session->userdata('id'),
+            'username' => $this->session->userdata('username'),
+            'full_name' => $this->session->userdata('full_name')
+        );
+        $data['list_produk'] = $this->Produk_model->get_all();
+        $this->load->view('administrator/templates/header', $data);
+        $this->load->view('administrator/templates/sidebar', $data);
+        $this->load->view('administrator/produk/index', $data);
+        $this->load->view('administrator/templates/footer');
+    }
+
+    public function tambah_produk()
+    {
+        $data['title'] = 'Gefila Store - Tambah Produk';
+        $data['list_produk'] = $this->Produk_model->get_all();
+        $data['admin'] = array(
+            'id' => $this->session->userdata('id'),
+            'username' => $this->session->userdata('username'),
+            'full_name' => $this->session->userdata('full_name')
+        );
+        $this->form_validation->set_rules('nama_produk', 'Nama Produk', 'required', [
+            'required' => 'Nama Produk tidak boleh kosong'
+        ]);
+        $this->form_validation->set_rules('kategori_produk', 'Kategori', 'required', [
+            'required' => 'Nama Kategori tidak boleh kosong'
+        ]);
+        if ($this->form_validation->run() !== FALSE) {
+            $this->__simpan_produk();
+        } else {
+            $data['list_kategori'] = $this->Produk_kategori_model->get_all();
+            $this->load->view('administrator/templates/header', $data);
+            $this->load->view('administrator/templates/sidebar', $data);
+            $this->load->view('administrator/produk/tambah_produk', $data);
+            $this->load->view('administrator/templates/footer');
+        }
+    }
+
+    public function __simpan_produk()
+    {
+        $data = [
+            'nama' => ucwords($this->input->post('nama_produk')),
+            'categori_id' => $this->input->post('kategori_produk'),
+            'harga' => $this->input->post('harga_produk'),
+            'stok' => $this->input->post('stok_produk'),
+            'deskripsi' => ucfirst($this->input->post('deskripsi_produk')),
+        ];
+
+        $id_produk = $this->Produk_model->tambah($data);
+        $count = count($_FILES['gambar_produk']['name']);
+
+        if ($count > 0) {
+            $this->__produk_gambar_upload($count, $id_produk);
+        }
+        $this->session->set_flashdata('message', '
+                <script>
+                    Swal.fire({
+                        icon: "success",
+                        title: "Berhasil",
+                        text: "Produk berhasil ditambahkan",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+                ');
+
+        redirect('admin/produk');
+    }
+
+    private function __produk_gambar_upload($count, $id_produk){
+        for($i=0; $i < $count; $i++){
+            if(!empty($_FILES['gambar_produk']['name'][$i])){
+                $_FILES['file']['name'] = $_FILES['gambar_produk']['name'][$i];
+                $_FILES['file']['type'] = $_FILES['gambar_produk']['type'][$i];
+                $_FILES['file']['tmp_name'] = $_FILES['gambar_produk']['tmp_name'][$i];
+                $_FILES['file']['error'] = $_FILES['gambar_produk']['error'][$i];
+                $_FILES['file']['size'] = $_FILES['gambar_produk']['size'][$i];
+
+                $config['upload_path'] = 'uploads/produk/';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                $config['max_size'] = '5000';
+                $config['file_name'] = 'produk-'. $id_produk . '-' . $i;
+                $this->load->library('upload', $config);
+
+                if($this->upload->do_upload('file')){
+                    $uploadData = $this->upload->data();
+                    $filename = $uploadData['file_name'];
+                    $data = [
+                        'nama_gambar' => $filename,
+                        'produk_id' => $id_produk
+                    ];
+                    $this->Produk_gambar_model->tambah($data);
+                }
+            }
+        }
+    }
+
+    public function hapus_produk($id)
+    {
+        $this->Produk_model->hapus($id);
+        $this->session->set_flashdata('message', '
+                <script>
+                    Swal.fire({
+                        icon: "success",
+                        title: "Berhasil",
+                        text: "Produk berhasil dihapus",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+                ');
+        redirect('admin/produk');
+    }
+}
