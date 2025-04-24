@@ -9,14 +9,13 @@ class Produk_gambar_model extends CI_Model{
 
     }
 
-    public function get_by_id($id){
+    public function get_by_produk_id($id){
         $this->db->where('produk_id', $id);
         $query = $this->db->get($this->_table);
         return  $query->result_array();
     }
 
     public function hapus($id){
-
         return $this->db->delete($this->_table, array('id_gambar' => $id));
     }
 

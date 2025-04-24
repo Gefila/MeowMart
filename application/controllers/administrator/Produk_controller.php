@@ -85,9 +85,10 @@ class Produk_controller extends CI_Controller
         redirect('admin/produk');
     }
 
-    private function __produk_gambar_upload($count, $id_produk){
-        for($i=0; $i < $count; $i++){
-            if(!empty($_FILES['gambar_produk']['name'][$i])){
+    private function __produk_gambar_upload($count, $id_produk)
+    {
+        for ($i = 0; $i < $count; $i++) {
+            if (!empty($_FILES['gambar_produk']['name'][$i])) {
                 $_FILES['file']['name'] = $_FILES['gambar_produk']['name'][$i];
                 $_FILES['file']['type'] = $_FILES['gambar_produk']['type'][$i];
                 $_FILES['file']['tmp_name'] = $_FILES['gambar_produk']['tmp_name'][$i];
@@ -97,10 +98,10 @@ class Produk_controller extends CI_Controller
                 $config['upload_path'] = 'uploads/produk/';
                 $config['allowed_types'] = 'jpg|jpeg|png|gif';
                 $config['max_size'] = '5000';
-                $config['file_name'] = 'produk-'. $id_produk . '-' . $i;
+                $config['file_name'] = 'produk-' . $id_produk . '-' . $i;
                 $this->load->library('upload', $config);
 
-                if($this->upload->do_upload('file')){
+                if ($this->upload->do_upload('file')) {
                     $uploadData = $this->upload->data();
                     $filename = $uploadData['file_name'];
                     $data = [
@@ -127,6 +128,89 @@ class Produk_controller extends CI_Controller
                     });
                 </script>
                 ');
+        redirect('admin/produk');
+    }
+
+    public function ubah_produk($id)
+    {
+        $produk = $this->Produk_model->get_by_id($id);
+        if ($produk) {
+            $this->form_validation->set_rules('nama_produk', 'Nama Produk', 'required', [
+                'required' => 'Nama Produk tidak boleh kosong'
+            ]);
+            $this->form_validation->set_rules('kategori_produk', 'Kategori', 'required', [
+                'required' => 'Nama Kategori tidak boleh kosong'
+            ]);
+            if ($this->form_validation->run() !== FALSE) {
+                $this->__ubah_produk($id);
+            } else {
+                $data['title'] = 'Gefila Store - Ubah Produk';
+                $data['admin'] = array(
+                    'id' => $this->session->userdata('id'),
+                    'username' => $this->session->userdata('username'),
+                    'full_name' => $this->session->userdata('full_name')
+                );
+                $data['produk'] = $this->Produk_model->get_by_id($id);
+                $data['list_kategori'] = $this->Produk_kategori_model->get_all();
+                $data['gambar_model'] = $this->Produk_gambar_model;
+                $this->load->view('administrator/templates/header', $data);
+                $this->load->view('administrator/templates/sidebar', $data);
+                $this->load->view('administrator/produk/ubah_produk', $data);
+                $this->load->view('administrator/templates/footer');
+            }
+        } else {
+            $this->session->set_flashdata('message', '
+                <script>
+                    Swal.fire({
+                        icon: "error",
+                        title: "Gagal",
+                        text: "Produk tidak ditemukan",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+                ');
+            redirect('admin/produk');
+        }
+    }
+
+    public function __ubah_produk($id)
+    {
+        $data = [
+            'nama' => ucwords($this->input->post('nama_produk')),
+            'categori_id' => $this->input->post('kategori_produk'),
+            'harga' => $this->input->post('harga_produk'),
+            'stok' => $this->input->post('stok_produk'),
+            'deskripsi' => ucfirst($this->input->post('deskripsi_produk')),
+        ];
+
+        $ubah = $this->Produk_model->ubah($data, $id);
+
+        if ($ubah) {
+            $this->session->set_flashdata('message', '
+                <script>
+                    Swal.fire({
+                        icon: "success",
+                        title: "Berhasil",
+                        text: "Produk berhasil diubah",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+                ');
+        } else {
+            $this->session->set_flashdata('message', '
+                <script>
+                    Swal.fire({
+                        icon: "error",
+                        title: "Gagal",
+                        text: "Produk gagal diubah",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+                ');
+        }
         redirect('admin/produk');
     }
 }
