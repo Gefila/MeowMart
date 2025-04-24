@@ -116,19 +116,31 @@ class Produk_controller extends CI_Controller
 
     public function hapus_produk($id)
     {
-        $this->Produk_model->hapus($id);
-        $this->session->set_flashdata('message', '
-                <script>
-                    Swal.fire({
-                        icon: "success",
-                        title: "Berhasil",
-                        text: "Produk berhasil dihapus",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                </script>
-                ');
-        redirect('admin/produk');
+        $produk = $this->Produk_model->get_by_id($id);
+        if ($produk) {
+            $list_gambar = $this->Produk_gambar_model->get_by_produk_id($id);
+            foreach ($list_gambar as $gambar) {
+                $id_gambar = $gambar['id_gambar'];
+                $nama_gambar = $gambar['nama_gambar'];
+                $this->Produk_gambar_model->hapus($id_gambar);
+                $path = './uploads/produk/' . $nama_gambar;
+                unlink($path);
+            }
+
+            $this->Produk_model->hapus($id);
+            $this->session->set_flashdata('message', '
+                    <script>
+                        Swal.fire({
+                            icon: "success",
+                            title: "Berhasil",
+                            text: "Produk berhasil dihapus",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    </script>
+                    ');
+            redirect('admin/produk');
+        }
     }
 
     public function ubah_produk($id)
