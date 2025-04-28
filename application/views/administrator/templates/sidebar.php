@@ -59,7 +59,7 @@
                               </a>
                           </li>
                           <li class="nav-item">
-                              <a href="<?= base_url() ?>admin/produk" class="nav-link">
+                              <a href="<?= base_url() ?>admin/produk"  class="nav-link <?= ($this->uri->segment(2) == 'produk') ? 'active' : '' ?>">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>Produk</p>
                               </a>

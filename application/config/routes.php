@@ -62,3 +62,9 @@ $route['admin/kategori'] = 'administrator/Kategori_controller/index';
 $route['admin/kategori/tambah'] = 'administrator/Kategori_controller/tambah_kategori';
 $route['admin/kategori/hapus/(:num)'] = 'administrator/Kategori_controller/hapus_kategori/$1';
 $route['admin/kategori/ubah/(:num)'] = 'administrator/Kategori_controller/ubah_kategori/$1';
+
+#prduk
+$route['admin/produk'] = 'administrator/Produk_controller/index';
+$route['admin/produk/tambah'] = 'administrator/Produk_controller/tambah_produk';
+$route['admin/produk/ubah/(:num)'] = 'administrator/Produk_controller/ubah_produk/$1';
+$route['admin/produk/hapus/(:num)'] = 'administrator/Produk_controller/hapus_produk/$1';
