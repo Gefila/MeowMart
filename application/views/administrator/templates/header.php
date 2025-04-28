@@ -19,6 +19,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/dark-modern.css">
 
     <script src="<?= base_url('assets/') ?>plugins/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="<?= base_url('assets/') ?>plugins/jquery/jquery.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini dark-mode layout-navbar-fixed layout-fixed">

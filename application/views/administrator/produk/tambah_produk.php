@@ -85,4 +85,12 @@
   	<!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-z
+
+  <script>
+  	// JavaScript untuk mengubah label input file secara dinamis
+  	document.querySelector('#gambar_produk').addEventListener('change', function(e) {
+  		var fileName = Array.from(this.files).map(f => f.name).join(', ');
+  		var nextSibling = e.target.nextElementSibling;
+  		nextSibling.innerText = fileName || 'Pilih Gambar'; // Default jika gak ada file
+  	});
+  </script>
