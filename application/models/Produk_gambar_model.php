@@ -9,6 +9,12 @@ class Produk_gambar_model extends CI_Model{
 
     }
 
+    public function get_by_id($id){
+        $this->db->where('id_gambar', $id);
+        $query = $this->db->get($this->_table);
+        return  $query->row_array();
+    }
+
     public function get_by_produk_id($id){
         $this->db->where('produk_id', $id);
         $query = $this->db->get($this->_table);
@@ -20,7 +26,7 @@ class Produk_gambar_model extends CI_Model{
     }
 
     public function ubah($data, $id){
-        $this->db->where('id_kategori', $id);
+        $this->db->where('id_gambar', $id);
         $this->db->update($this->_table, $data);
         return ($this->db->affected_rows() != 1) ? false : true;
     }

@@ -197,6 +197,11 @@ class Produk_controller extends CI_Controller
         ];
 
         $ubah = $this->Produk_model->ubah($data, $id);
+        if(!empty($_FILES['gambar_produk']['name'][0])) {
+            $count = count($_FILES['gambar_produk']['name']);
+            $this->__produk_gambar_upload($count, $id);
+            $ubah = true;
+        }
 
         if ($ubah) {
             $this->session->set_flashdata('message', '
@@ -224,5 +229,86 @@ class Produk_controller extends CI_Controller
                 ');
         }
         redirect('admin/produk');
+    }
+
+    public function ubah_gambar($id)
+    {
+        $gambar = $this->Produk_gambar_model->get_by_id($id);
+        if ($gambar) {
+            // Check if the form was submitted with file upload
+            if (!empty($_FILES['gambar_produk']['name'])) {
+                $config['upload_path'] = './uploads/produk/';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                $config['max_size'] = '5000';
+                $config['file_name'] = 'produk-' . $gambar['produk_id'] . '-' . time();
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('gambar_produk')) {
+                    // Delete old image file
+                    $path = './uploads/produk/' . $gambar['nama_gambar'];
+                    if (file_exists($path)) {
+                        unlink($path);
+                    }
+
+                    // Save new image
+                    $uploadData = $this->upload->data();
+                    $data = [
+                        'nama_gambar' => $uploadData['file_name']
+                    ];
+                    $this->Produk_gambar_model->ubah($data, $id);
+
+                    $this->session->set_flashdata('message', '
+                    <script>
+                        Swal.fire({
+                            icon: "success",
+                            title: "Berhasil",
+                            text: "Gambar berhasil diubah",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    </script>
+                ');
+                } else {
+                    $this->session->set_flashdata('message', '
+                    <script>
+                        Swal.fire({
+                            icon: "error",
+                            title: "Gagal",
+                            text: "' . $this->upload->display_errors('', '') . '",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    </script>
+                ');
+                }
+            } else {
+                $this->session->set_flashdata('message', '
+                <script>
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Perhatian",
+                        text: "Silahkan pilih gambar terlebih dahulu",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+            ');
+            }
+            redirect('admin/produk/ubah/' . $gambar['produk_id']);
+        } else {
+            $this->session->set_flashdata('message', '
+            <script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Gagal",
+                    text: "Gambar tidak ditemukan",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            </script>
+        ');
+            redirect('admin/produk');
+        }
     }
 }
