@@ -311,4 +311,39 @@ class Produk_controller extends CI_Controller
             redirect('admin/produk');
         }
     }
+
+    public function hapus_gambar($id){
+        $gambar = $this->Produk_gambar_model->get_by_id($id);
+        if ($gambar) {
+            $path = './uploads/produk/' . $gambar['nama_gambar'];
+            if (file_exists($path)) {
+                unlink($path);
+            }
+            $this->Produk_gambar_model->hapus($id);
+            $this->session->set_flashdata('message', '
+                <script>
+                    Swal.fire({
+                        icon: "success",
+                        title: "Berhasil",
+                        text: "Gambar berhasil dihapus",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+                ');
+        } else {
+            $this->session->set_flashdata('message', '
+                <script>
+                    Swal.fire({
+                        icon: "error",
+                        title: "Gagal",
+                        text: "Gambar tidak ditemukan",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+                ');
+        }
+        redirect('admin/produk/ubah/' . $gambar['produk_id']);
+    }
 }

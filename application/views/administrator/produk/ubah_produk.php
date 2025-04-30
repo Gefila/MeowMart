@@ -1,5 +1,8 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+  	<?php if ($this->session->flashdata('message')) : ?>
+  		<?= $this->session->flashdata('message'); ?>
+  	<?php endif; ?>
   	<!-- Content Header (Page header) -->
   	<div class="content-header">
   		<div class="container-fluid">
@@ -19,6 +22,7 @@
   	<!-- /.content-header -->
 
   	<div class="content">
+
   		<div class="container-fluid">
   			<form method="post" enctype="multipart/form-data">
   				<div class="card card-body">
@@ -77,9 +81,9 @@
   										data-image="<?= base_url('uploads/produk/' . $gambar['nama_gambar']) ?>">
   										<i class="fa fa-edit"></i> Ubah
   									</a>
-  									<a href="#" class="btn btn-danger btn-sm mt-1 flex-fill">
+  									<button type="button" class="btn btn-danger btn-sm mt-1 flex-fill" onclick="deleteGambar(<?= $gambar['id_gambar'] ?>,'<?= $gambar['nama_gambar'] ?>')">
   										<i class="fa fa-trash"></i> Hapus
-  									</a>
+  									</button>
   								</div>
   							</div>
   						<?php endforeach; ?>
@@ -92,7 +96,7 @@
   						<a href="<?= base_url('admin/produk') ?>" class="btn btn-danger">
   							<i class="fa fa-arrow-left"></i> Kembali
   						</a>
-  						<button class="btn btn-primary">
+  						<button class="btn btn-primary ml-2">
   							<i class="fa fa-edit"></i> Edit Produk
   						</button>
   					</div>
@@ -193,4 +197,25 @@
   			}
   		});
   	});
+
+
+  	function deleteGambar(id, image) {
+  		Swal.fire({
+  			icon: "warning",
+  			title: `Apakah anda yakin ingin menghapus gambar ?`,
+  			text: "Produk ini akan dihapus",
+  			showConfirmButton: true,
+  			imageUrl: "<?= base_url('uploads/produk/') ?>" + image,
+  			imageWidth: 400,
+  			imageHeight: 200,
+  			confirmButtonText: "Ya, hapus!",
+  			showCancelButton: true,
+  			cancelButtonText: "Tidak, batalkan!",
+  			confirmButtonColor: "#3085d6",
+  		}).then((result) => {
+  			if (result.isConfirmed) {
+  				window.location.href = "<?= base_url('admin/produk/hapus_gambar/') ?>" + id;
+  			}
+  		});
+  	}
   </script>
