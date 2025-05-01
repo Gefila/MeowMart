@@ -48,7 +48,7 @@
                                   <td><?= $no; ?></td>
                                   <td><?= $produk['pd_nama']; ?></td>
                                   <td><?= $produk['kt_nama']; ?></td>
-                                  <td><?= number_format($produk['harga']); ?></td>
+                                  <td>Rp. <?= number_format($produk['harga']); ?></td>
                                   <td><?= $produk['stok']; ?></td>
                                   <td><?= $produk['deskripsi']; ?></td>
                                   <td>

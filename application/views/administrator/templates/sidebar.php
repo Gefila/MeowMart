@@ -53,7 +53,7 @@
                       </a>
                       <ul class="nav nav-treeview">
                           <li class="nav-item">
-                              <a href="<?= base_url() ?>admin/kategori" class="nav-link <?= ($this->uri->segment(2) == 'kategori') ? 'active' : '' ?>">
+                    <a href="<?= base_url() ?>admin/kategori" class="nav-link <?= ($this->uri->segment(2) == 'kategori') ? 'active' : '' ?>">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>Kategori</p>
                               </a>

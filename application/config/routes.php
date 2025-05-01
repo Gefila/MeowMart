@@ -68,3 +68,5 @@ $route['admin/produk'] = 'administrator/Produk_controller/index';
 $route['admin/produk/tambah'] = 'administrator/Produk_controller/tambah_produk';
 $route['admin/produk/ubah/(:num)'] = 'administrator/Produk_controller/ubah_produk/$1';
 $route['admin/produk/hapus/(:num)'] = 'administrator/Produk_controller/hapus_produk/$1';
+$route['admin/produk/ubah_gambar/(:num)'] = 'administrator/Produk_controller/ubah_gambar/$1';
+$route['admin/produk/hapus_gambar/(:num)'] = 'administrator/Produk_controller/hapus_gambar/$1';
