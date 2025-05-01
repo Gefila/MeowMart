@@ -203,7 +203,7 @@
   		Swal.fire({
   			icon: "warning",
   			title: `Apakah anda yakin ingin menghapus gambar ?`,
-  			text: "Produk ini akan dihapus",
+  			text: "Gambar ini akan dihapus",
   			showConfirmButton: true,
   			imageUrl: "<?= base_url('uploads/produk/') ?>" + image,
   			imageWidth: 400,
