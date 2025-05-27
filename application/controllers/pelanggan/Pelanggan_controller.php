@@ -127,4 +127,55 @@ class Pelanggan_controller extends CI_Controller
         }
         redirect('register');
     }
+
+    public function profil()
+    {
+        if (!$this->session->has_userdata('pelanggan_login')) {
+            redirect(base_url());
+            die;
+        }
+
+        $data['data_pelanggan'] = $this->Pelanggan_model->get_by_id($this->session->userdata('id'));
+        $this->load->view('pelanggan/templates/header', $data);
+        $this->load->view('pelanggan/pelanggan_profil', $data);
+        $this->load->view('pelanggan/templates/footer');
+    }
+
+    public function ubah_profil()
+    {
+        if (!$this->session->has_userdata('pelanggan_login')) {
+            redirect(base_url());
+            die;
+        }
+        $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required');
+        $this->form_validation->set_rules('nopon', 'No Telpon', 'required');
+        $this->form_validation->set_rules('alamat', 'Alamat', 'required');
+        $this->form_validation->set_rules('kota', 'Kota Tinggal', 'required');
+        $this->form_validation->set_rules('kodepos', 'Kode POS', 'required');
+        $this->form_validation->set_rules('provinsi', 'Provinsi', 'required');
+
+        if ($this->form_validation->run() !== FALSE) {
+            $data = [
+                'nama_pelanggan' => ucwords($this->input->post('nama')),
+                'password' => $this->input->post('password') ? md5($this->input->post('password')) : $this->Pelanggan_model->get_by_id($this->session->userdata('id'))['password'],
+                'telp_pelanggan' => $this->input->post('nopon'),
+                'alamat' => ucwords($this->input->post('alamat')),
+                'kota' => ucwords($this->input->post('kota')),
+                'kode_pos' => $this->input->post('kodepos'),
+                'provinsi' => ucwords($this->input->post('provinsi')),
+            ];
+            $ubah = $this->Pelanggan_model->ubah($data, $this->session->userdata('id'));
+            if ($ubah) {
+                $this->session->set_flashdata('sukses', "Profil berhasil diubah.");
+            } else {
+                $this->session->set_flashdata('sukses', "Profil gagal diubah.");
+            }
+            redirect('profil');
+        } else {
+            $data['data_pelanggan'] = $this->Pelanggan_model->get_by_id($this->session->userdata('id'));
+            $this->load->view('pelanggan/templates/header', $data);
+            $this->load->view('pelanggan/pelanggan_profil_ubah', $data);
+            $this->load->view('pelanggan/templates/footer');
+        }
+    }
 }

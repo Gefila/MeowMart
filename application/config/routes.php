@@ -80,3 +80,5 @@ $route['admin/produk_diskon/hapus/(:num)'] = 'administrator/Produk_diskon_Contro
 $route['login'] = 'pelanggan/Pelanggan_controller/login';
 $route['register'] = 'pelanggan/Pelanggan_controller/register';
 $route['logout'] = 'pelanggan/Pelanggan_controller/logout';
+$route['profil'] = 'pelanggan/Pelanggan_controller/profil';
+$route['profil/ubah'] = 'pelanggan/Pelanggan_controller/ubah_profil';

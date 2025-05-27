@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Dashboard - Title</title>
+    <title>Gefila Store</title>
     <!-- <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" /> -->
     <link href="<?= base_url('assets/') ?>css/styles.css" rel="stylesheet" />
     <script src="<?= base_url('assets/') ?>plugins/fontawesome/js/all.js" crossorigin="anonymous"></script>
@@ -21,7 +21,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2" aria-label="Eighth navbar example">
         <div class="container">
-            <a class="navbar-brand" href="#">Gefila Store</a>
+            <a class="navbar-brand" href="<?= base_url() ?>">Gefila Store</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -45,7 +45,7 @@
                 </form>
 
                 <div class="text-end">
-                    <?php if ($data_pelanggan['pelanggan_login'] ?? false) : ?>
+                    <?php if ($this->session->userdata('pelanggan_login') ?? false) : ?>
                         <a href="<?= base_url() ?>profil" class="btn btn-outline-light me-2 ">Profil</a>
                         <a href="<?= base_url() ?>keranjang" class="btn btn-outline-light me-2 ">Keranjang</a>
                         <a href="<?= base_url('logout') ?>" class="btn btn-danger me-2">Logout</a>
