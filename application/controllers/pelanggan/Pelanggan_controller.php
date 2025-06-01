@@ -175,11 +175,40 @@ class Pelanggan_controller extends CI_Controller
                 'alamat' => ucwords($this->input->post('alamat')),
                 'kota' => ucwords($this->input->post('kota')),
                 'kode_pos' => $this->input->post('kodepos'),
-                'provinsi' => ucwords($this->input->post('provinsi')),
+                'provinsi' => ucwords($this->input->post('provinsi'))
             ];
+            if (!empty($_FILES['foto_pelanggan']['name'])) {
+                $config['upload_path'] = 'uploads/profil-pelanggan/';
+                $config['allowed_types'] = 'jpg|jpeg|png';
+                $config['max_size'] = 2048; // 2MB
+                $config['file_name'] = 'foto_' . time() . '_' . $_FILES['foto_pelanggan']['name'];
+                $this->load->library('upload', $config);
+                if ($this->upload->do_upload('foto_pelanggan')) {
+                    $data['foto_pelanggan'] = $this->upload->data('file_name');
+                    // Hapus foto lama jika ada
+                    $pelanggan = $this->Pelanggan_model->get_by_id($this->session->userdata('id'));
+                    if ($pelanggan['foto_pelanggan'] && file_exists('uploads/profil-pelanggan/' . $pelanggan['foto_pelanggan'])) {
+                        unlink('uploads/profil-pelanggan/' . $pelanggan['foto_pelanggan']);
+                    }
+                } else {
+                    $this->session->set_flashdata('message', "
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal Mengunggah Foto',
+                            text: '{$this->upload->display_errors()}',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    </script>
+                    ");
+                    redirect('profil/ubah');
+                    return;
+                }
+            }
             $ubah = $this->Pelanggan_model->ubah($data, $this->session->userdata('id'));
             if ($ubah) {
-                $this->session->set_flashdata('sukses', "
+                $this->session->set_flashdata('message', "
                 <script>
                     Swal.fire({
                         icon: 'success',
@@ -191,7 +220,7 @@ class Pelanggan_controller extends CI_Controller
                 </script>
                 ");
             } else {
-                $this->session->set_flashdata('sukses', "
+                $this->session->set_flashdata('message', "
                 <script>
                     Swal.fire({
                         icon: 'error',

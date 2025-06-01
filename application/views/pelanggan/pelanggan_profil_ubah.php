@@ -1,8 +1,26 @@
+<?php
+$foto = !empty($data_pelanggan['foto_pelanggan'])
+    ? base_url('uploads/profil-pelanggan/') . $data_pelanggan['foto_pelanggan']
+    : 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png';
+?>
+
 <div class="container mt-5">
+    <?php if ($this->session->flashdata('message')) : ?>
+        <?= $this->session->flashdata('message') ?>
+    <?php endif ?>
     <h2 class="mb-4">Edit Profil Pelanggan</h2>
     <div class="card">
         <div class="card-body">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group mb-2 text-center">
+                    <img src="<?= $foto ?>" alt="Foto Profil" class="rounded-circle shadow-sm border border-2 mb-2 d-block mx-auto" id="img-profile" width="200" height="200">
+                    <?php if (!empty($data_pelanggan['foto_pelanggan'])) : ?>
+                        <button type="button" class="btn btn-secondary mt-2">Ganti Foto Profil</button>
+                    <?php else : ?>
+                        <button type="button" class="btn btn-secondary mt-2">Tambahkan Foto Profil</button>
+                    <?php endif; ?>
+                    <input type="file" name="foto_pelanggan" class="form-control mt-2" accept="image/*" style="display: none;">
+                </div>
                 <div class="form-group mb-2">
                     <label>Email</label>
                     <input disabled type="email" name="email" value="<?= htmlspecialchars($data_pelanggan['email']) ?>" class="form-control" required>
@@ -42,3 +60,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.querySelector('.btn-secondary').addEventListener('click', function() {
+        document.querySelector('input[name="foto_pelanggan"]').click();
+    });
+    document.querySelector('input[name="foto_pelanggan"]').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('img-profile').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

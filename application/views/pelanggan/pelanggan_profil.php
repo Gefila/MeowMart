@@ -1,12 +1,16 @@
+<?php
+$foto = !empty($data_pelanggan['foto_pelanggan'])
+    ? base_url('uploads/profil-pelanggan/') . $data_pelanggan['foto_pelanggan']
+    : 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png';
+?>
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <h2 class="text-center mb-4"><i class="fa-solid fa-user-circle me-2"></i>Profil Pelanggan</h2>
 
-            <?php if ($this->session->flashdata('sukses')): ?>
-                <div class="alert alert-success text-center">
-                    <i class="fa-solid fa-circle-check me-2"></i><?= $this->session->flashdata('sukses') ?>
-                </div>
+            <?php if ($this->session->flashdata('message')): ?>
+                <?= $this->session->flashdata('message') ?>
             <?php endif; ?>
 
             <div class="card shadow rounded-4 border-0">
@@ -14,7 +18,7 @@
 
                     <!-- Foto Profil -->
                     <div class="text-center mb-4">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
+                        <img src="<?= $foto ?>"
                             alt="Foto Profil"
                             class="rounded-circle shadow-sm border border-2"
                             width="130" height="130">
