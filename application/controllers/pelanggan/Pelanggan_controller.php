@@ -42,12 +42,16 @@ class Pelanggan_controller extends CI_Controller
             redirect(base_url());
         } else {
             $this->session->set_flashdata('message', "
-                <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-                    <strong>Username atau Password Salah!</strong> Silahkan coba lagi.
-                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                </button>
-            </div>");
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Login Gagal',
+                        text: 'Email atau Password salah!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+            ");
         }
         redirect('login');
     }
@@ -101,29 +105,38 @@ class Pelanggan_controller extends CI_Controller
             $simpan = $this->Pelanggan_model->tambah($data);
             if ($simpan) {
                 $this->session->set_flashdata('message', "
-                    <div class='alert alert-success alert-dismissible fade show' role='alert'>
-                        <strong>Registrasi Berhasil!</strong> Silahkan login untuk melanjutkan.
-                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                        <span aria-hidden='true'>&times;</span>
-                    </button>
-                </div>");
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Registrasi Berhasil',
+                            text: 'Silahkan login untuk melanjutkan.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    </script>");
             } else {
                 $this->session->set_flashdata('message', "
-                    <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-                        <strong>Registrasi Gagal!</strong> Silahkan coba lagi.
-                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                        <span aria-hidden='true'>&times;</span>
-                    </button>
-                </div>");
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Registrasi Gagal',
+                        text: 'Terjadi kesalahan saat menyimpan data, silahkan coba lagi.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>");
             }
         } else {
             $this->session->set_flashdata('message', "
-                <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-                    <strong>Email Sudah Terdaftar!</strong> Silahkan gunakan email lain.
-                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                </button>
-            </div>");
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Email Sudah Terdaftar',
+                        text: 'Silahkan gunakan email lain.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>");
         }
         redirect('register');
     }
@@ -166,9 +179,29 @@ class Pelanggan_controller extends CI_Controller
             ];
             $ubah = $this->Pelanggan_model->ubah($data, $this->session->userdata('id'));
             if ($ubah) {
-                $this->session->set_flashdata('sukses', "Profil berhasil diubah.");
+                $this->session->set_flashdata('sukses', "
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Profil Berhasil Diubah',
+                        text: 'Perubahan profil berhasil disimpan.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+                ");
             } else {
-                $this->session->set_flashdata('sukses', "Profil gagal diubah.");
+                $this->session->set_flashdata('sukses', "
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal Mengubah Profil',
+                        text: 'Terjadi kesalahan saat menyimpan perubahan, silahkan coba lagi.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+                ");
             }
             redirect('profil');
         } else {

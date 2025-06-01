@@ -1,44 +1,60 @@
 <div class="container mt-5">
-    <h2 class="mb-4">Profil Pelanggan</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center mb-4"><i class="fa-solid fa-user-circle me-2"></i>Profil Pelanggan</h2>
 
-    <?php if ($this->session->flashdata('sukses')): ?>
-        <div class="alert alert-success"><?= $this->session->flashdata('sukses') ?></div>
-    <?php endif; ?>
+            <?php if ($this->session->flashdata('sukses')): ?>
+                <div class="alert alert-success text-center">
+                    <i class="fa-solid fa-circle-check me-2"></i><?= $this->session->flashdata('sukses') ?>
+                </div>
+            <?php endif; ?>
 
-    <div class="card">
-        <div class="card-body">
-            <table class="table table-bordered">
-                <tr>
-                    <th>Email</th>
-                    <td><?= htmlspecialchars($data_pelanggan['email']) ?></td>
-                </tr>
-                <tr>
-                    <th>Nama Pelanggan</th>
-                    <td><?= htmlspecialchars($data_pelanggan['nama_pelanggan']) ?></td>
-                </tr>
-                <tr>
-                    <th>Telepon</th>
-                    <td><?= htmlspecialchars($data_pelanggan['telp_pelanggan']) ?></td>
-                </tr>
-                <tr>
-                    <th>Alamat</th>
-                    <td><?= htmlspecialchars($data_pelanggan['alamat']) ?></td>
-                </tr>
-                <tr>
-                    <th>Kota</th>
-                    <td><?= htmlspecialchars($data_pelanggan['kota']) ?></td>
-                </tr>
-                <tr>
-                    <th>Kode Pos</th>
-                    <td><?= htmlspecialchars($data_pelanggan['kode_pos']) ?></td>
-                </tr>
-                <tr>
-                    <th>Provinsi</th>
-                    <td><?= htmlspecialchars($data_pelanggan['provinsi']) ?></td>
-                </tr>
-            </table>
+            <div class="card shadow rounded-4 border-0">
+                <div class="card-body p-4">
 
-            <a href="<?= base_url('profil/ubah') ?>" class="btn btn-primary mt-3">Edit Profil</a>
+                    <!-- Foto Profil -->
+                    <div class="text-center mb-4">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
+                            alt="Foto Profil"
+                            class="rounded-circle shadow-sm border border-2"
+                            width="130" height="130">
+                        <h4 class="mt-3"><?= htmlspecialchars($data_pelanggan['nama_pelanggan']) ?></h4>
+                        <p class="text-muted"><i class="fa-solid fa-envelope me-2"></i><?= htmlspecialchars($data_pelanggan['email']) ?></p>
+                    </div>
+
+                    <!-- Informasi Profil -->
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold"><i class="fa-solid fa-phone me-2"></i>Telepon:</label>
+                            <div><?= htmlspecialchars($data_pelanggan['telp_pelanggan']) ?></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold"><i class="fa-solid fa-location-dot me-2"></i>Alamat:</label>
+                            <div><?= htmlspecialchars($data_pelanggan['alamat']) ?></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold"><i class="fa-solid fa-city me-2"></i>Kota:</label>
+                            <div><?= htmlspecialchars($data_pelanggan['kota']) ?></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold"><i class="fa-solid fa-envelope-open-text me-2"></i>Kode Pos:</label>
+                            <div><?= htmlspecialchars($data_pelanggan['kode_pos']) ?></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold"><i class="fa-solid fa-map me-2"></i>Provinsi:</label>
+                            <div><?= htmlspecialchars($data_pelanggan['provinsi']) ?></div>
+                        </div>
+                    </div>
+
+                    <!-- Tombol Edit -->
+                    <div class="text-center mt-4">
+                        <a href="<?= base_url('profil/ubah') ?>" class="btn btn-primary px-4 rounded-pill">
+                            <i class="fa-solid fa-pen-to-square me-2"></i>Edit Profil
+                        </a>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>

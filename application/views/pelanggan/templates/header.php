@@ -15,6 +15,8 @@
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/') ?>plugins/slick/slick.css" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/') ?>plugins/slick/slick-theme.css" />
 
+    <script src="<?= base_url('assets/') ?>plugins/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="<?= base_url('assets/') ?>plugins/jquery/jquery.min.js"></script>
 </head>
 
 <body class="sb-nav-fixed">

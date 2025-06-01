@@ -1,6 +1,5 @@
 <div class="container mt-5">
     <h2 class="mb-4">Edit Profil Pelanggan</h2>
-
     <div class="card">
         <div class="card-body">
             <form method="post">
@@ -18,7 +17,7 @@
                 </div>
                 <div class="form-group mb-2">
                     <label>Telepon</label>
-                    <input type="text" name="nopon" value="<?= htmlspecialchars($data_pelanggan['telp_pelanggan']) ?>" class="form-control" required>
+                    <input type="number" name="nopon" value="<?= htmlspecialchars($data_pelanggan['telp_pelanggan']) ?>" class="form-control" required>
                 </div>
                 <div class="form-group mb-2">
                     <label>Alamat</label>

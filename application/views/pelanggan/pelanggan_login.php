@@ -10,14 +10,11 @@
             </nav>
         </div>
     </div>
-
-
+    <?php if ($this->session->flashdata('message')) : ?>
+        <?= $this->session->flashdata('message') ?>
+    <?php endif ?>
     <div class="row justify-content-center mb-5">
         <div class="col-lg-5">
-
-            <?php if ($this->session->flashdata('message')) : ?>
-                <?= $this->session->flashdata('message') ?>
-            <?php endif ?>
             <main class="form-signin w-100 m-auto">
                 <form id="form_login" method="POST" data-bitwarden-watching="1">
                     <div class="form-floating">
