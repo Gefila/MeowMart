@@ -82,3 +82,7 @@ $route['register'] = 'pelanggan/Pelanggan_controller/register';
 $route['logout'] = 'pelanggan/Pelanggan_controller/logout';
 $route['profil'] = 'pelanggan/Pelanggan_controller/profil';
 $route['profil/ubah'] = 'pelanggan/Pelanggan_controller/ubah_profil';
+
+#produk
+$route['produk'] = 'pelanggan/Produk_controller/detail';
+$route['produk/(:num)'] = 'pelanggan/Produk_controller/detail/$1';
