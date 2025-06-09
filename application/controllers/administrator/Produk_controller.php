@@ -203,7 +203,9 @@ class Produk_controller extends CI_Controller
             $ubah = true;
         }
 
-        if ($ubah) {
+        $ubah_gambar = isset($_SESSION['ubah_gambar']) ? $_SESSION['ubah_gambar'] : false;
+        if ($ubah || $ubah_gambar) {
+            unset($_SESSION['ubah_gambar']);
             $this->session->set_flashdata('message', '
                 <script>
                     Swal.fire({
@@ -320,6 +322,7 @@ class Produk_controller extends CI_Controller
                 unlink($path);
             }
             $this->Produk_gambar_model->hapus($id);
+            $_SESSION['ubah_gambar'] = true;
             $this->session->set_flashdata('message', '
                 <script>
                     Swal.fire({
