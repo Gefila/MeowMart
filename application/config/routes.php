@@ -86,3 +86,9 @@ $route['profil/ubah'] = 'pelanggan/Pelanggan_controller/ubah_profil';
 #produk
 $route['produk'] = 'pelanggan/Produk_controller/detail';
 $route['produk/(:num)'] = 'pelanggan/Produk_controller/detail/$1';
+
+#keranjang
+$route['keranjang'] = 'pelanggan/Keranjang_controller/index';
+$route['keranjang/tambah'] = 'pelanggan/Keranjang_controller/tambah';
+$route['keranjang/ubah'] = 'pelanggan/Keranjang_controller/ubah_keranjang';
+$route['keranjang/hapus'] = 'pelanggan/Keranjang_controller/hapus_produk_keranjang';

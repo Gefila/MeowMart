@@ -6,6 +6,9 @@
              right: 16px;
          }
      </style>
+    <?php if ($this->session->flashdata('message')): ?>
+        <?= $this->session->flashdata('message'); ?>
+    <?php endif; ?>
      <div class="container mb-3">
          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
              <?php foreach ($list_produk as $key => $value): ?>
