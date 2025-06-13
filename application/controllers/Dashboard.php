@@ -11,10 +11,12 @@ class Dashboard extends CI_Controller
         $this->load->model('Produk_kategori_model');
         $this->load->model('Produk_gambar_model');
     }
+    
     public function index()
     {
         $data['gambar_model'] = $this->Produk_gambar_model;
         $data['list_produk'] = $this->Produk_model->get_all();
+        $data['list_kategori'] = $this->Produk_kategori_model->get_all();
         if($this->session->userdata('pelanggan_login') !== NULL){
             $data['data_pelanggan'] = array(
                 'id_pelanggan' => $this->session->userdata('id_pelanggan'),

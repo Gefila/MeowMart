@@ -11,7 +11,7 @@
      <?php endif; ?>
      <div class="container mb-3">
          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-             <?php foreach (array_slice($list_produk, 0, 8) as $key => $value): ?>
+             <?php foreach ($list_produk as $key => $value): ?>
                  <div class="col d-flex">
                      <div class="card shadow-sm h-100 w-100 d-flex flex-column">
                          <?php
@@ -50,5 +50,5 @@
      </div>
 
      <div class="container mt-4 text-center">
-         <a type="button" class="btn btn-outline-primary" href="<?= base_url('produk') ?>">Lihat Semua Produk</a>
+         <a type="button" class="btn btn-outline-primary" href="<?= base_url('produk'); ?>">Lihat Semua Produk</a>
      </div>

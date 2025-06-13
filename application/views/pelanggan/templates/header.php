@@ -33,12 +33,15 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="<?= base_url() ?>">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="<?= base_url('produk') ?>">Produk</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Kategori</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <?php foreach ($list_kategori as $kategori) : ?>
+                                <li><a class="dropdown-item" href="<?= base_url('produk/kategori/') . $kategori['id_kategori'] ?>"><?= $kategori['nama']; ?></a></li>
+                            <?php endforeach; ?>
                         </ul>
                     </li>
                 </ul>

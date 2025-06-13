@@ -31,4 +31,13 @@ class Produk_model extends CI_Model{
         $this->db->update($this->_table, $data);
         return ($this->db->affected_rows() != 1) ? false : true;
     }
+
+    public function get_by_kategori_id($id){
+        $this->db->select('produk.id_produk, produk.nama as pd_nama, produk.stok, produk.deskripsi, produk.harga, kategori.nama as kt_nama');
+        $this->db->from($this->_table);
+        $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id');
+        $this->db->where('produk.categori_id', $id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }

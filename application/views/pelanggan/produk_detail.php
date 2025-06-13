@@ -32,12 +32,20 @@
     <div class="row">
         <div class="col-5">
             <div class="product-slick mb-2">
-                <?php foreach ($list_gambar as $gambar): ?>
+                <?php if (!empty($list_gambar)): ?>
+                    <?php foreach ($list_gambar as $gambar): ?>
+                        <div>
+                            <img src="<?= base_url('uploads/produk') ?>/<?= !empty($gambar['nama_gambar']) ? $gambar['nama_gambar'] : 'image-placeholder.jpg' ?>"
+                                alt="<?= $produk['nama'] ?>" class="image-produk img-fluid"
+                                onerror="this.src='<?= base_url('uploads/produk/image-placeholder.jpg') ?>'">
+                        </div>
+                    <?php endforeach ?>
+                <?php else: ?>
                     <div>
-                        <img src="<?= base_url('uploads/produk') ?>/<?= $gambar['nama_gambar'] ?>"
-                            alt="" class="image-produk img-fluid">
+                        <img src="<?= base_url('uploads/produk/image-placeholder.jpg') ?>"
+                            alt="<?= $produk['nama'] ?>" class="image-produk img-fluid">
                     </div>
-                <?php endforeach ?>
+                <?php endif; ?>
             </div>
             <div class="row">
                 <div class="col-12 p-2">
