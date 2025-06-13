@@ -44,16 +44,16 @@
                 <tr>
                   <td><?= $no; ?></td>
                   <td>
-                    <?= $produk_diskon['nama085']; ?>
+                    <?= $produk_diskon['nama']; ?>
                   </td>
                   <td>
-                    <?= $produk_diskon['jumlah_diskon085']; ?>
+                    <?= $produk_diskon['jumlah_diskon']; ?>
                   </td>
                   <td>
-                    <?= $produk_diskon['deskripsi085']; ?>
+                    <?= $produk_diskon['deskripsi']; ?>
                   </td>
                   <td>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteProdukDiskon(<?= $produk_diskon['id_diskon085']; ?>,'<?= $produk_diskon['nama085']; ?>')"><i class="fa fa-trash"></i> Delete</button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteProdukDiskon(<?= $produk_diskon['id_diskon']; ?>,'<?= $produk_diskon['nama']; ?>')"><i class="fa fa-trash"></i> Delete</button>
                   </td>
                 <?php $no++;
               endforeach; ?>

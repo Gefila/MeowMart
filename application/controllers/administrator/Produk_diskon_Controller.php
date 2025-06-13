@@ -2,13 +2,13 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Produk_diskon_Controller085 extends CI_Controller
+class Produk_diskon_Controller extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
         is_admin_logged_in();
-        $this->load->model('Produk_diskon_Model085');
+        $this->load->model('Produk_diskon_Model');
     }
 
     public function index()
@@ -19,7 +19,7 @@ class Produk_diskon_Controller085 extends CI_Controller
             'username' => $this->session->userdata('username'),
             'full_name' => $this->session->userdata('full_name')
         );
-        $data['list_produk_diskon'] = $this->Produk_diskon_Model085->get_all();
+        $data['list_produk_diskon'] = $this->Produk_diskon_Model->get_all();
         $this->load->view('administrator/templates/header', $data);
         $this->load->view('administrator/templates/sidebar', $data);
         $this->load->view('administrator/diskon/index', $data);
@@ -43,7 +43,7 @@ class Produk_diskon_Controller085 extends CI_Controller
         if ($this->form_validation->run() !== FALSE) {
             $this->__simpan_produk_diskon();
         } else {
-            $data['list_kategori'] = $this->Produk_diskon_Model085->get_all();
+            $data['list_kategori'] = $this->Produk_diskon_Model->get_all();
             $this->load->view('administrator/templates/header', $data);
             $this->load->view('administrator/templates/sidebar', $data);
             $this->load->view('administrator/diskon/tambah_diskon', $data);
@@ -54,12 +54,12 @@ class Produk_diskon_Controller085 extends CI_Controller
     public function __simpan_produk_diskon()
     {
         $data = [
-            'nama085' => ucwords($this->input->post('nama_produk_diskon')),
-            'jumlah_diskon085' => $this->input->post('jumlah_produk_diskon'),
-            'deskripsi085' => ucfirst($this->input->post('deskripsi_produk_diskon')),
+            'nama' => ucwords($this->input->post('nama_produk_diskon')),
+            'jumlah_diskon' => $this->input->post('jumlah_produk_diskon'),
+            'deskripsi' => ucfirst($this->input->post('deskripsi_produk_diskon')),
         ];
 
-        $simpan = $this->Produk_diskon_Model085->tambah($data);
+        $simpan = $this->Produk_diskon_Model->tambah($data);
         if ($simpan) {
 
             $this->session->set_flashdata('message', '
@@ -92,9 +92,9 @@ class Produk_diskon_Controller085 extends CI_Controller
 
     public function hapus_produk_diskon($id)
     {
-        $produk_diskon = $this->Produk_diskon_Model085->get_by_id($id);
+        $produk_diskon = $this->Produk_diskon_Model->get_by_id($id);
         if ($produk_diskon) {
-            $this->Produk_diskon_Model085->hapus($id);
+            $this->Produk_diskon_Model->hapus($id);
             $this->session->set_flashdata('message', '
                     <script>
                         Swal.fire({

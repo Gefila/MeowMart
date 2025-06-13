@@ -1,8 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Produk_diskon_Model085 extends CI_Model{
-    private $_table = "prodiskon2211500085";
+class Produk_diskon_Model extends CI_Model{
+    private $_table = "produk_diskon";
 
     public function get_all(){
         $query = $this->db->get($this->_table);
@@ -15,12 +15,12 @@ class Produk_diskon_Model085 extends CI_Model{
     }
 
     public function get_by_id($id){
-        $this->db->where('id_diskon085', $id);
+        $this->db->where('id_diskon', $id);
         return $this->db->get($this->_table)->row_array();
     }
 
     public function hapus($id){
-        $this->db->delete($this->_table, array('id_diskon085' => $id));
+        $this->db->delete($this->_table, array('id_diskon' => $id));
     }
 
 }
