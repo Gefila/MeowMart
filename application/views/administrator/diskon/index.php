@@ -53,6 +53,7 @@
                     <?= $produk_diskon['deskripsi']; ?>
                   </td>
                   <td>
+                    <a href="<?= base_url('admin/produk_diskon/ubah/') . $produk_diskon['id_diskon']; ?>" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
                     <button type="button" class="btn btn-danger btn-sm" onclick="deleteProdukDiskon(<?= $produk_diskon['id_diskon']; ?>,'<?= $produk_diskon['nama']; ?>')"><i class="fa fa-trash"></i> Delete</button>
                   </td>
                 <?php $no++;

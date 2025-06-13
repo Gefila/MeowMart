@@ -23,4 +23,9 @@ class Produk_diskon_Model extends CI_Model{
         $this->db->delete($this->_table, array('id_diskon' => $id));
     }
 
+    public function ubah($id, $data){
+        $this->db->where('id_diskon', $id);
+        return $this->db->update($this->_table, $data);
+    }
+
 }

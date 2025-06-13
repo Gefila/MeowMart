@@ -75,6 +75,7 @@ $route['admin/produk/hapus_gambar/(:num)'] = 'administrator/Produk_controller/ha
 $route['admin/produk_diskon'] = 'administrator/Produk_diskon_Controller/index';
 $route['admin/produk_diskon/tambah'] = 'administrator/Produk_diskon_Controller/tambah_produk_diskon';
 $route['admin/produk_diskon/hapus/(:num)'] = 'administrator/Produk_diskon_Controller/hapus_produk_diskon/$1';
+$route['admin/produk_diskon/ubah/(:num)'] = 'administrator/Produk_diskon_Controller/ubah_produk_diskon/$1';
 
 #pelanggan
 $route['login'] = 'pelanggan/Pelanggan_controller/login';
