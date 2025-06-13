@@ -35,6 +35,7 @@
                 <th>Nama</th>
                 <th>Jumlah</th>
                 <th>Deskripsi</th>
+                <th>Produk</th>
               </tr>
             </thead>
             <tbody>
@@ -51,6 +52,9 @@
                   </td>
                   <td>
                     <?= $produk_diskon['deskripsi']; ?>
+                  </td>
+                  <td>
+                    <?= $produk_diskon['pd_nama']; ?>
                   </td>
                   <td>
                     <a href="<?= base_url('admin/produk_diskon/ubah/') . $produk_diskon['id_diskon']; ?>" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>

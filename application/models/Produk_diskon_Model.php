@@ -5,7 +5,10 @@ class Produk_diskon_Model extends CI_Model{
     private $_table = "produk_diskon";
 
     public function get_all(){
-        $query = $this->db->get($this->_table);
+        $this->db->select('produk_diskon.id_diskon, produk_diskon.nama, produk_diskon.jumlah_diskon, produk_diskon.deskripsi, produk_diskon.produk_id, produk.nama as pd_nama');
+        $this->db->from($this->_table);
+        $this->db->join('produk', 'produk.id_produk = produk_diskon.produk_id');
+        $query = $this->db->get();
         return $query->result_array();
     }
 

@@ -36,6 +36,15 @@
   						<label for="deskripsi_produk_diskon">Deskripsi</label>
   						<textarea class="form-control" rows="10" col="30" name="deskripsi_produk_diskon" id="deskripsi_produk_diskon" placeholder="Masukkan Deskripsi Produk Diskon"><?= $produk_diskon['deskripsi'] ?></textarea>
   					</div>
+  					<div class="form-group">
+  						<label for="produk">Produk</label>
+  						<select class="form-control select2" name="produk" id="produk" value="<?= $produk_diskon['produk_id'] ?>">
+  							<option>Pilih Produk</option>
+  							<?php foreach ($list_produk as $produk) : ?>
+  								<option <?= ($produk['id_produk'] == $produk_diskon['produk_id']) ? 'selected' : '' ?> value="<?= $produk['id_produk'] ?>"><?= $produk['pd_nama'] ?></option>
+  							<?php endforeach; ?>
+  						</select>
+  					</div>
   					<div>
   						<a href="<?= base_url('admin/produk_diskon') ?>" class="btn btn-danger">
   							<i class="fa fa-arrow-left"></i> Kembali

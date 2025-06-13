@@ -9,6 +9,7 @@ class Produk_diskon_Controller extends CI_Controller
         parent::__construct();
         is_admin_logged_in();
         $this->load->model('Produk_diskon_Model');
+        $this->load->model('Produk_Model');
     }
 
     public function index()
@@ -40,10 +41,13 @@ class Produk_diskon_Controller extends CI_Controller
         $this->form_validation->set_rules('jumlah_produk_diskon', 'Jumlah Diskon', 'required', [
             'required' => 'Jumlah Diskon tidak boleh kosong'
         ]);
+        $this->form_validation->set_rules('produk', 'Produk', 'required', [
+            'required' => 'Produk tidak boleh kosong'
+        ]);
         if ($this->form_validation->run() !== FALSE) {
             $this->__simpan_produk_diskon();
         } else {
-            $data['list_kategori'] = $this->Produk_diskon_Model->get_all();
+            $data['list_produk'] = $this->Produk_Model->get_all();
             $this->load->view('administrator/templates/header', $data);
             $this->load->view('administrator/templates/sidebar', $data);
             $this->load->view('administrator/diskon/tambah_diskon', $data);
@@ -57,6 +61,7 @@ class Produk_diskon_Controller extends CI_Controller
             'nama' => ucwords($this->input->post('nama_produk_diskon')),
             'jumlah_diskon' => $this->input->post('jumlah_produk_diskon'),
             'deskripsi' => ucfirst($this->input->post('deskripsi_produk_diskon')),
+            'produk_id' => $this->input->post('produk'),
         ];
 
         $simpan = $this->Produk_diskon_Model->tambah($data);
@@ -128,6 +133,11 @@ class Produk_diskon_Controller extends CI_Controller
         $this->form_validation->set_rules('jumlah_produk_diskon', 'Jumlah Diskon', 'required', [
             'required' => 'Jumlah Diskon tidak boleh kosong'
         ]);
+        $this->form_validation->set_rules('produk', 'Produk', 'required', [
+            'required' => 'Produk tidak boleh kosong'
+        ]);
+        $data['list_produk'] = $this->Produk_Model->get_all();
+
         if ($this->form_validation->run() !== FALSE) {
             $this->__update_produk_diskon($id);
         } else {
@@ -144,6 +154,7 @@ class Produk_diskon_Controller extends CI_Controller
             'nama' => ucwords($this->input->post('nama_produk_diskon')),
             'jumlah_diskon' => $this->input->post('jumlah_produk_diskon'),
             'deskripsi' => ucfirst($this->input->post('deskripsi_produk_diskon')),
+            'produk_id' => $this->input->post('produk'),
         ];
 
         $update = $this->Produk_diskon_Model->ubah($id, $data);
