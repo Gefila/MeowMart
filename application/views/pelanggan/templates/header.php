@@ -22,9 +22,60 @@
     <script src="<?= base_url('assets/') ?>plugins/jquery/jquery.min.js"></script>
 </head>
 
+<!-- Tambahkan ini di <head> jika belum -->
+<style>
+    .navbar-modern {
+        background: #f8f9fc;
+        transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+    }
+
+    .navbar-scrolled {
+        background-color: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-modern .nav-link {
+        color: #333 !important;
+        font-weight: 500;
+    }
+
+    .navbar-modern .nav-link:hover {
+        color: #0d6efd !important;
+    }
+
+    .navbar-modern .navbar-brand {
+        font-weight: bold;
+        color: #0d6efd !important;
+    }
+
+    .navbar-modern .dropdown-menu {
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const navbar = document.querySelector(".navbar");
+        const addScrollEffect = () => {
+            if (window.scrollY > 10) {
+                navbar.classList.add("navbar-scrolled");
+            } else {
+                navbar.classList.remove("navbar-scrolled");
+            }
+        };
+
+        addScrollEffect(); // Check on load
+        window.addEventListener("scroll", addScrollEffect);
+    });
+</script>
+
+
 <body class="sb-nav-fixed">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2" aria-label="Eighth navbar example">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-modern">
         <div class="container">
             <a class="navbar-brand" href="<?= base_url() ?>">Gefila Store</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,10 +85,10 @@
             <div class="collapse navbar-collapse" id="navbarsExample07">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<?= base_url() ?>">Home</a>
+                        <a class="nav-link active" href="<?= base_url() ?>">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="<?= base_url('produk') ?>">Produk</a>
+                        <a class="nav-link" href="<?= base_url('produk') ?>">Produk</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Kategori</a>
@@ -48,20 +99,22 @@
                         </ul>
                     </li>
                 </ul>
-                <form role="search" class="me-3">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+
+                <form class="d-flex me-3" role="search">
+                    <input class="form-control" type="search" placeholder="Cari produk..." aria-label="Search">
                 </form>
 
-                <div class="text-end">
+                <div class="d-flex align-items-center gap-2">
                     <?php if ($this->session->userdata('pelanggan_login') ?? false) : ?>
-                        <a href="<?= base_url() ?>profil" class="btn btn-outline-light me-2 ">Profil</a>
-                        <a href="<?= base_url() ?>keranjang" class="btn btn-outline-light me-2 ">Keranjang</a>
-                        <a href="<?= base_url('logout') ?>" class="btn btn-danger me-2">Logout</a>
+                        <a href="<?= base_url() ?>profil" class="btn btn-outline-primary">Profil</a>
+                        <a href="<?= base_url() ?>keranjang" class="btn btn-outline-secondary">Keranjang</a>
+                        <a href="<?= base_url('logout') ?>" class="btn btn-danger">Logout</a>
                     <?php else : ?>
-                        <a href="<?= base_url() ?>login" class="btn btn-outline-light me-2 ">Login</a>
-                        <a href="<?= base_url('register') ?>" class="btn btn-warning me-2">Register</a>
+                        <a href="<?= base_url() ?>login" class="btn btn-outline-primary">Login</a>
+                        <a href="<?= base_url('register') ?>" class="btn btn-primary">Register</a>
                     <?php endif; ?>
                 </div>
             </div>
         </div>
     </nav>
+    <div style="margin-top: 5rem;"></div>

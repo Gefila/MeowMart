@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 <div class="container mb-3">
-    <div class="swiper mySwiper">
+    <div class="swiper mySwiper rounded-3">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <div class="slide-content">
