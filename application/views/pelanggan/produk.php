@@ -27,9 +27,11 @@
                                  style="object-fit: cover; height: 200px;">
                          </a>
                          <div class="card-body d-flex flex-column">
-                             <div class="diskon mb-2">
-                                 <span class="badge badge-primary">Lebaran.20%</span>
-                             </div>
+                             <?php if (!empty($value['nama_diskon']) && !empty($value['jumlah_diskon'])): ?>
+                                 <div class="diskon mb-2">
+                                     <span class="badge bg-danger"><?= $value['nama_diskon'] . " " . $value['jumlah_diskon'] . "%" ?></span>
+                                 </div>
+                             <?php endif; ?>
                              <a href="<?= base_url('produk/') . $value['id_produk'] ?>" class="text-decoration-none text-dark mb-2">
                                  <h5 class="card-title text-truncate" style="max-width: 100%;"><?= $value['pd_nama'] ?></h5>
                              </a>
@@ -37,7 +39,16 @@
                                  <div class="d-flex justify-content-between align-items-center">
                                      <div class="harga d-flex align-items-baseline" style="color: #333;">
                                          <small class="mr-1">Rp</small>
-                                         <h5 class="mb-0"><?= number_format($value['harga']) ?></h5>
+                                         <?php if (!empty($value['harga_akhir']) && $value['harga_akhir'] < $value['harga']): ?>
+                                             <h5 class="mb-0 me-2" style="text-decoration: line-through; color: #888;">
+                                                 <?= number_format($value['harga']) ?>
+                                             </h5>
+                                             <h5 class="mb-0 text-danger">
+                                                 <?= number_format($value['harga_akhir']) ?>
+                                             </h5>
+                                         <?php else: ?>
+                                             <h5 class="mb-0"><?= number_format($value['harga']) ?></h5>
+                                         <?php endif; ?>
                                      </div>
                                      <small class="text-muted">2 terjual</small>
                                  </div>

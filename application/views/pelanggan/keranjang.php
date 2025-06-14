@@ -77,17 +77,24 @@
                 <?php
                 $grand_total = 0;
                 foreach ($produk as $item):
-                    $sub_total = $item['harga'] * $item['jumlah'];
+                    $sub_total = $item['harga_akhir'] * $item['jumlah'];
                     $grand_total += $sub_total;
                 ?>
                     <tr>
                         <td class="text-start">
                             <div class="product-info">
-                                <img src="<?= base_url('uploads/produk/' . $item['gambar'][0]['nama_gambar']); ?>" alt="<?= $item['nama']; ?>" class="product-img">
-                                <?= $item['nama']; ?>
+                                <img src="<?= base_url('uploads/produk/' . (!empty($item['gambar'][0]['nama_gambar']) ? $item['gambar'][0]['nama_gambar'] : 'image-placeholder.jpg')) ?>" alt="<?= $item['pd_nama']; ?>" class="product-img">
+                                <?= $item['pd_nama']; ?>
                             </div>
                         </td>
-                        <td>Rp. <?= number_format($item['harga'], 0, ',', '.'); ?></td>
+                        <td> 
+                            <?php if (!empty($item['harga_akhir']) && $item['harga_akhir'] < $item['harga']): ?>
+                                <span class="text-decoration-line-through text-muted">Rp. <?= number_format($item['harga'], 0, ',', '.'); ?></span>
+                                <span class="text-danger">Rp. <?= number_format($item['harga_akhir'], 0, ',', '.'); ?></span>
+                            <?php else: ?>
+                                Rp. <?= number_format($item['harga'], 0, ',', '.'); ?>
+                            <?php endif; ?>
+                        </td>
                         <td>
                             <div class="qty-control">
                                 <form action="<?= base_url('keranjang/ubah/') ?>" method="post" class="d-inline">

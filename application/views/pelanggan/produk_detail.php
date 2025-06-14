@@ -19,7 +19,7 @@
 <div class="container mb-3 mt-4">
     <div class="p-5 mb-4 bg-light rounded-3">
         <div class="container-fluid py-1 text-center">
-            <h4><?= $produk['nama'] ?></h4>
+            <h4><?= $produk['pd_nama'] ?></h4>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb justify-content-center text-small">
                     <li class="breadcrumb-item"><a href="<?= base_url() ?>">Home</a></li>
@@ -36,14 +36,14 @@
                     <?php foreach ($list_gambar as $gambar): ?>
                         <div>
                             <img src="<?= base_url('uploads/produk') ?>/<?= !empty($gambar['nama_gambar']) ? $gambar['nama_gambar'] : 'image-placeholder.jpg' ?>"
-                                alt="<?= $produk['nama'] ?>" class="image-produk img-fluid"
+                                alt="<?= $produk['pd_nama'] ?>" class="image-produk img-fluid"
                                 onerror="this.src='<?= base_url('uploads/produk/image-placeholder.jpg') ?>'">
                         </div>
                     <?php endforeach ?>
                 <?php else: ?>
                     <div>
                         <img src="<?= base_url('uploads/produk/image-placeholder.jpg') ?>"
-                            alt="<?= $produk['nama'] ?>" class="image-produk img-fluid">
+                            alt="<?= $produk['pd_nama'] ?>" class="image-produk img-fluid">
                     </div>
                 <?php endif; ?>
             </div>
@@ -64,8 +64,20 @@
         <div class="col">
             <div class="produk-detail">
                 <div class="pro-group">
-                    <h2><?= $produk['nama'] ?></h2>
-                    <h5>Rp <?= number_format($produk['harga']) ?></h5>
+                    <h2><?= $produk['pd_nama'] ?></h2>
+                    <div class="d-flex align-items-baseline mb-3" style="color: #333;">
+                        <small class="mr-1">Rp</small>
+                        <?php if (!empty($produk['harga_akhir']) && $produk['harga_akhir'] < $produk['harga']): ?>
+                            <h5 class="mb-0 me-2" style="text-decoration: line-through; color: #888;">
+                                <?= number_format($produk['harga']) ?>
+                            </h5>
+                            <h5 class="mb-0 text-danger">
+                                <?= number_format($produk['harga_akhir']) ?>
+                            </h5>
+                        <?php else: ?>
+                            <h5 class="mb-0"><?= number_format($produk['harga']) ?></h5>
+                        <?php endif; ?>
+                    </div>
                     <p>ID Produk: <?= $produk['id_produk'] ?></p>
                     <p>STOK: <?= $produk['stok'] ?></p>
 
