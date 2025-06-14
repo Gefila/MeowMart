@@ -11,8 +11,9 @@ class Keranjang_controller extends CI_Controller
         $this->load->model('Keranjang_produk_model');
         $this->load->model('Produk_model');
         $this->load->model('Produk_gambar_model');
+        $this->load->model('Produk_kategori_model');
 
-        if(!$this->session->userdata('pelanggan_login')) {
+        if (!$this->session->userdata('pelanggan_login')) {
             $this->session->set_flashdata('message', '
             <script>
             Swal.fire({
@@ -51,6 +52,7 @@ class Keranjang_controller extends CI_Controller
             $data['total'] = $total;
             $data['keranjang_id'] = $keranjang[0]['id_keranjang'];
             $data['produk'] = $produk;
+            $data['list_kategori'] = $this->Produk_kategori_model->get_all();
             $this->load->view('pelanggan/templates/header');
             $this->load->view('pelanggan/keranjang', $data);
             $this->load->view('pelanggan/templates/footer');

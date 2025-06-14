@@ -7,6 +7,7 @@ class Pelanggan_controller extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Pelanggan_model');
+        $this->load->model('Produk_kategori_model');
     }
 
     public function login()
@@ -17,10 +18,12 @@ class Pelanggan_controller extends CI_Controller
         }
         $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
+        $data['list_kategori'] = $this->Produk_kategori_model->get_all();
+
         if ($this->form_validation->run() !== FALSE) {
             $this->__login();
         } else {
-            $this->load->view('pelanggan/templates/header');
+            $this->load->view('pelanggan/templates/header', $data);
             $this->load->view('pelanggan/pelanggan_login');
             $this->load->view('pelanggan/templates/footer');
         }
@@ -81,7 +84,8 @@ class Pelanggan_controller extends CI_Controller
         if ($this->form_validation->run() !== FALSE) {
             $this->__register();
         } else {
-            $this->load->view('pelanggan/templates/header');
+            $data['list_kategori'] = $this->Produk_kategori_model->get_all();
+            $this->load->view('pelanggan/templates/header', $data);
             $this->load->view('pelanggan/pelanggan_register');
             $this->load->view('pelanggan/templates/footer');
         }
@@ -149,6 +153,7 @@ class Pelanggan_controller extends CI_Controller
         }
 
         $data['data_pelanggan'] = $this->Pelanggan_model->get_by_id($this->session->userdata('id'));
+        $data['list_kategori'] = $this->Produk_kategori_model->get_all();
         $this->load->view('pelanggan/templates/header', $data);
         $this->load->view('pelanggan/pelanggan_profil', $data);
         $this->load->view('pelanggan/templates/footer');
@@ -235,6 +240,7 @@ class Pelanggan_controller extends CI_Controller
             redirect('profil');
         } else {
             $data['data_pelanggan'] = $this->Pelanggan_model->get_by_id($this->session->userdata('id'));
+            $data['list_kategori'] = $this->Produk_kategori_model->get_all();
             $this->load->view('pelanggan/templates/header', $data);
             $this->load->view('pelanggan/pelanggan_profil_ubah', $data);
             $this->load->view('pelanggan/templates/footer');

@@ -14,7 +14,10 @@
     <script src="<?= base_url('assets/') ?>plugins/jquery/jquery-1.11.0.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/') ?>plugins/slick/slick.css" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/') ?>plugins/slick/slick-theme.css" />
-
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="<?= base_url('assets/') ?>plugins/sweetalert2/dist/sweetalert2.all.min.js"></script>
     <script src="<?= base_url('assets/') ?>plugins/jquery/jquery.min.js"></script>
 </head>
