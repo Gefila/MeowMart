@@ -53,4 +53,14 @@ class Produk_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
+
+    public function get_product_without_diskon()
+    {
+        $this->db->select('produk.id_produk, produk.nama as pd_nama');
+        $this->db->from($this->_table);
+        $this->db->where('produk_diskon.produk_id IS NULL', NULL, FALSE);
+        $this->db->join('produk_diskon', 'produk_diskon.produk_id = produk.id_produk', 'left');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }

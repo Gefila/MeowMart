@@ -18,6 +18,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/adminlte.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/dark-modern.css">
 
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
     <script src="<?= base_url('assets/') ?>plugins/sweetalert2/dist/sweetalert2.all.min.js"></script>
     <script src="<?= base_url('assets/') ?>plugins/jquery/jquery.min.js"></script>
 </head>
@@ -167,3 +171,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
         </nav>
         <!-- /.navbar -->
+
+        <script>
+            $(function() {
+                //Initialize Select2 Elements
+                $('.select2').select2()
+
+                //Initialize Select2 Elements
+                $('.select2bs4').select2({
+                    theme: 'bootstrap4'
+                })
+            })
+        </script>
