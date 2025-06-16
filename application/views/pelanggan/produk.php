@@ -45,6 +45,16 @@
 <?php endif; ?>
 
 <div class="container mb-4">
+    <div class="row mb-3">
+
+        <div class="col text-start">
+            <?php if (isset($kategori)): ?>
+                <h5 class="text-muted"><?= $kategori['nama'] ?></h5>
+            <?php else: ?>
+                <h5 class="text-muted">Semua Produk</h5>
+            <?php endif; ?>
+        </div>
+    </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
         <?php foreach ($list_produk as $key => $value): ?>
             <?php
@@ -62,7 +72,6 @@
                         </div>
                     <?php endif; ?>
                     <img src="<?= base_url('uploads/produk/') . $gambar[0]['nama_gambar']; ?>" alt="Gambar Produk" class="produk-img">
-
                     <div class="card-body d-flex flex-column">
                         <h6 class="card-title text-truncate-2 mb-2"><?= $value['pd_nama'] ?></h6>
 

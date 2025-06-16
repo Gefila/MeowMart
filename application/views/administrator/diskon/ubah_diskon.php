@@ -38,8 +38,8 @@
   					</div>
   					<div class="form-group">
   						<label for="produk">Produk</label>
-  						<select class="form-control select2" name="produk" id="produk" value="<?= $produk_diskon['produk_id'] ?>">
-  							<option>Pilih Produk</option>
+  						<select class="form-control select2" name="produk" id="produk" data-placeholder="Pilih Produk" style="width: 100%;">
+  							<option value="">Pilih Produk</option>
   							<?php foreach ($list_produk as $produk) : ?>
   								<option <?= ($produk['id_produk'] == $produk_diskon['produk_id']) ? 'selected' : '' ?> value="<?= $produk['id_produk'] ?>"><?= $produk['pd_nama'] ?></option>
   							<?php endforeach; ?>

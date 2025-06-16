@@ -41,9 +41,6 @@ class Produk_diskon_Controller extends CI_Controller
         $this->form_validation->set_rules('jumlah_produk_diskon', 'Jumlah Diskon', 'required', [
             'required' => 'Jumlah Diskon tidak boleh kosong'
         ]);
-        $this->form_validation->set_rules('produk[]', 'Produk', 'required', [
-            'required' => 'Produk tidak boleh kosong'
-        ]);
         if ($this->form_validation->run() !== FALSE) {
             $this->__simpan_produk_diskon();
         } else {
@@ -57,15 +54,13 @@ class Produk_diskon_Controller extends CI_Controller
 
     public function __simpan_produk_diskon()
     {
-        foreach ($this->input->post('produk') as $produk_id) {
-            $data = [
-                'nama' => ucwords($this->input->post('nama_produk_diskon')),
-                'jumlah_diskon' => $this->input->post('jumlah_produk_diskon'),
-                'deskripsi' => ucfirst($this->input->post('deskripsi_produk_diskon')),
-                'produk_id' => $produk_id,
-            ];
-            $simpan = $this->Produk_diskon_Model->tambah($data);
-        }
+        $data = [
+            'nama' => ucwords($this->input->post('nama_produk_diskon')),
+            'jumlah_diskon' => $this->input->post('jumlah_produk_diskon'),
+            'deskripsi' => ucfirst($this->input->post('deskripsi_produk_diskon')),
+            'produk_id' => $this->input->post('produk'),
+        ];
+        $simpan = $this->Produk_diskon_Model->tambah($data);
         if ($simpan) {
 
             $this->session->set_flashdata('message', '

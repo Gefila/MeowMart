@@ -37,8 +37,8 @@
   						<textarea class="form-control" rows="10" col="30" name="deskripsi_produk_diskon" id="deskripsi_produk_diskon" placeholder="Masukkan Deskripsi Produk Diskon"></textarea>
   					</div>
   					<div class="form-group">
-  						<label for="produk">Multiple</label>
-  						<select class="select2" multiple="multiple" name="produk[]" id="produk" data-placeholder="Pilih Produk" style="width: 100%;">
+  						<label for="produk">Produk</label>
+  						<select class="select2" name="produk" id="produk" data-placeholder="Pilih Produk" style="width: 100%;">
   							<option value="">Pilih Produk</option>
   							<?php foreach ($list_produk as $produk) : ?>
   								<option value="<?= $produk['id_produk'] ?>"><?= $produk['pd_nama'] ?></option>

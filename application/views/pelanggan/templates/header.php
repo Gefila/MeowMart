@@ -18,8 +18,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="<?= base_url('assets/') ?>plugins/sweetalert2/dist/sweetalert2.all.min.js"></script>
-    <script src="<?= base_url('assets/') ?>plugins/jquery/jquery.min.js"></script>
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+    <script src="<?= base_url('assets/') ?>plugins/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="<?= base_url('assets/') ?>plugins/jquery/jquery-1.11.0.min.js"></script>
 </head>
 
 <!-- Tambahkan ini di <head> jika belum -->

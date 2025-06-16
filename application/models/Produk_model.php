@@ -46,8 +46,9 @@ class Produk_model extends CI_Model
 
     public function get_by_kategori_id($id)
     {
-        $this->db->select('produk.id_produk, produk.nama as pd_nama, produk.stok, produk.deskripsi, produk.harga, kategori.nama as kt_nama');
+        $this->db->select('produk.id_produk, produk.nama as pd_nama, produk.stok, produk.deskripsi, produk.harga, kategori.nama as kt_nama, produk_diskon.nama as nama_diskon, produk_diskon.jumlah_diskon, (CASE WHEN produk_diskon.jumlah_diskon IS NULL THEN produk.harga ELSE (produk.harga - (produk.harga * produk_diskon.jumlah_diskon / 100)) END) as harga_akhir');
         $this->db->from($this->_table);
+        $this->db->join('produk_diskon', 'produk_diskon.produk_id = produk.id_produk', 'left');
         $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id');
         $this->db->where('produk.categori_id', $id);
         $query = $this->db->get();
