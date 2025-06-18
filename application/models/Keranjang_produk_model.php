@@ -54,7 +54,7 @@ class Keranjang_produk_model extends CI_Model{
         return ($this->db->affected_rows() !== 1) ? false : true;
     }
 
-    public function hapus($id)
+    public function hapus_by_keranjang($id)
     {
         $this->db->delete($this->table, ['id_keranjang_produk' => $id]);
         return ($this->db->affected_rows() !== 1) ? false : true;

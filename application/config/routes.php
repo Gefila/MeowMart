@@ -94,3 +94,7 @@ $route['keranjang'] = 'pelanggan/Keranjang_controller/index';
 $route['keranjang/tambah'] = 'pelanggan/Keranjang_controller/tambah';
 $route['keranjang/ubah'] = 'pelanggan/Keranjang_controller/ubah_keranjang';
 $route['keranjang/hapus'] = 'pelanggan/Keranjang_controller/hapus_produk_keranjang';
+
+#pesanan
+$route['pesanan'] = 'pelanggan/Pesanan_controller/index';
+$route['pesanan/tambah'] = 'pelanggan/Pesanan_controller/tambah_pesanan';

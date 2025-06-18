@@ -17,10 +17,10 @@ class Keranjang_model extends CI_Model
         return ($this->db->affected_rows() !== 1) ? false : true;
     }
 
-    public function getKeranjangByIdAndPelanggan($id_produk, $id_pelanggan)
+    public function getKeranjangByIdAndPelanggan($id_keranjang, $pelanggan_id)
     {
-        $this->db->where('id_produk', $id_produk);
-        $this->db->where('id_pelanggan', $id_pelanggan);
+        $this->db->where('id_keranjang', $id_keranjang);
+        $this->db->where('pelanggan_id', $pelanggan_id);
         $query = $this->db->get($this->table);
         return $query->row_array();
     }
