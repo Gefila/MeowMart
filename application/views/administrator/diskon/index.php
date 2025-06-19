@@ -35,12 +35,28 @@
                 <th>Nama</th>
                 <th>Jumlah</th>
                 <th>Deskripsi</th>
+                <th>Tanggal Mulai</th>
+                <th>Tanggal Akhir</th>
                 <th>Produk</th>
+                <th>Aksi</th>
               </tr>
             </thead>
             <tbody>
+              <?php
+              // Grouping manual by diskon_id
+              $grouped = [];
+              foreach ($list_produk_diskon as $row) {
+                $grouped[$row['id']]['id'] = $row['id'];
+                $grouped[$row['id']]['nama'] = $row['nama'];
+                $grouped[$row['id']]['persentase'] = $row['persentase'];
+                $grouped[$row['id']]['deskripsi'] = $row['deskripsi'];
+                $grouped[$row['id']]['tanggal_mulai'] = $row['tanggal_mulai'];
+                $grouped[$row['id']]['tanggal_akhir'] = $row['tanggal_akhir'];
+                $grouped[$row['id']]['produk'][] = $row['nama']; // 'nama_produk' kamu sebut sebagai 'nama' di hasil dump
+              }
+              ?>
               <?php $no = 1;
-              foreach ($list_produk_diskon as $produk_diskon):
+              foreach ($grouped as $produk_diskon):
               ?>
                 <tr>
                   <td><?= $no; ?></td>
@@ -48,17 +64,27 @@
                     <?= $produk_diskon['nama']; ?>
                   </td>
                   <td>
-                    <?= $produk_diskon['jumlah_diskon']; ?>
+                    <?= $produk_diskon['persentase']; ?>
                   </td>
                   <td>
                     <?= $produk_diskon['deskripsi']; ?>
                   </td>
                   <td>
-                    <?= $produk_diskon['pd_nama']; ?>
+                    <?= $produk_diskon['tanggal_mulai']; ?>
                   </td>
                   <td>
-                    <a href="<?= base_url('admin/produk_diskon/ubah/') . $produk_diskon['id_diskon']; ?>" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteProdukDiskon(<?= $produk_diskon['id_diskon']; ?>,'<?= $produk_diskon['nama']; ?>')"><i class="fa fa-trash"></i> Delete</button>
+                    <?= $produk_diskon['tanggal_akhir']; ?>
+                  </td>
+                  <td>
+                    <div class="d-flex flex-column" style="gap: 5px;">
+                      <?php foreach ($produk_diskon['produk'] as $produk): ?>
+                        <span class="badge badge-info"><?= $produk; ?></span>
+                      <?php endforeach; ?>
+                    </div>
+                  </td>
+                  <td>
+                    <a href="<?= base_url('admin/produk_diskon/ubah/') . $produk_diskon['id']; ?>" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteProdukDiskon(<?= $produk_diskon['id']; ?>,'<?= $produk_diskon['nama']; ?>')"><i class="fa fa-trash"></i> Delete</button>
                   </td>
                 <?php $no++;
               endforeach; ?>

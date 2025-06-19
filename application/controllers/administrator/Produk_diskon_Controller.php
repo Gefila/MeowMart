@@ -38,13 +38,13 @@ class Produk_diskon_Controller extends CI_Controller
         $this->form_validation->set_rules('nama_produk_diskon', 'Nama Produk Diskon', 'required', [
             'required' => 'Nama Produk Diskon tidak boleh kosong'
         ]);
-        $this->form_validation->set_rules('jumlah_produk_diskon', 'Jumlah Diskon', 'required', [
+        $this->form_validation->set_rules('persentase_produk_diskon', 'Jumlah Diskon', 'required', [
             'required' => 'Jumlah Diskon tidak boleh kosong'
         ]);
         if ($this->form_validation->run() !== FALSE) {
             $this->__simpan_produk_diskon();
         } else {
-            $data['list_produk'] = $this->Produk_Model->get_product_without_diskon();
+            $data['list_produk'] = $this->Produk_Model->get_all();
             $this->load->view('administrator/templates/header', $data);
             $this->load->view('administrator/templates/sidebar', $data);
             $this->load->view('administrator/diskon/tambah_diskon', $data);
@@ -56,13 +56,26 @@ class Produk_diskon_Controller extends CI_Controller
     {
         $data = [
             'nama' => ucwords($this->input->post('nama_produk_diskon')),
-            'jumlah_diskon' => $this->input->post('jumlah_produk_diskon'),
+            'persentase' => $this->input->post('persentase_produk_diskon'),
             'deskripsi' => ucfirst($this->input->post('deskripsi_produk_diskon')),
-            'produk_id' => $this->input->post('produk'),
+            'tanggal_mulai' => $this->input->post('tanggal_mulai_diskon'),
+            'tanggal_akhir' => $this->input->post('tanggal_akhir_diskon'),
         ];
         $simpan = $this->Produk_diskon_Model->tambah($data);
-        if ($simpan) {
 
+        $produk = $this->input->post('produk');
+
+        if ($produk){
+            foreach($produk as $id_produk) {
+                $dataProdukDiskon = [
+                    'produk_id' => $id_produk,
+                    'diskon_id' => $simpan,
+                ];
+                $this->Produk_diskon_Model->tambah_produk_diskon($dataProdukDiskon);
+            }
+        }
+
+        if ($simpan) {
             $this->session->set_flashdata('message', '
                     <script>
                         Swal.fire({
@@ -133,7 +146,6 @@ class Produk_diskon_Controller extends CI_Controller
             'required' => 'Produk tidak boleh kosong'
         ]);
         $data['list_produk'] = $this->Produk_Model->get_all();
-
         if ($this->form_validation->run() !== FALSE) {
             $this->__update_produk_diskon($id);
         } else {
@@ -154,6 +166,7 @@ class Produk_diskon_Controller extends CI_Controller
         ];
 
         $update = $this->Produk_diskon_Model->ubah($id, $data);
+
         if ($update) {
             $this->session->set_flashdata('message', '
                     <script>

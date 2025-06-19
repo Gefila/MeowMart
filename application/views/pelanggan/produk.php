@@ -66,9 +66,9 @@
             ?>
             <div class="col d-flex">
                 <a href="<?= $link_detail ?>" class="produk-card card h-100 w-100 d-flex flex-column">
-                    <?php if (!empty($value['nama_diskon']) && !empty($value['jumlah_diskon'])): ?>
+                    <?php if (!empty($value['nama_diskon']) && !empty($value['persentase'])): ?>
                         <div class="diskon">
-                            <span class="badge bg-danger"><?= $value['nama_diskon'] . " " . $value['jumlah_diskon'] . "%" ?></span>
+                            <span class="badge bg-danger"><?= $value['nama_diskon'] . " " . $value['persentase'] . "%" ?></span>
                         </div>
                     <?php endif; ?>
                     <img src="<?= base_url('uploads/produk/') . $gambar[0]['nama_gambar']; ?>" alt="Gambar Produk" class="produk-img">

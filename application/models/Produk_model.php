@@ -7,10 +7,26 @@ class Produk_model extends CI_Model
 
     public function get_all()
     {
-        $this->db->select('produk.id_produk, produk.nama as pd_nama, produk.stok, produk.deskripsi, produk.harga, kategori.nama as kt_nama, produk_diskon.nama as nama_diskon, produk_diskon.jumlah_diskon, (CASE WHEN produk_diskon.jumlah_diskon IS NULL THEN produk.harga ELSE (produk.harga - (produk.harga * produk_diskon.jumlah_diskon / 100)) END) as harga_akhir');
-        $this->db->from($this->_table);
+        $this->db->select('
+    produk.id_produk,
+    produk.nama as pd_nama,
+    produk.stok,
+    produk.deskripsi,
+    produk.harga,
+    kategori.nama as kt_nama,
+    diskon.nama as nama_diskon,
+    produk_diskon.diskon_id,
+    diskon.persentase,
+    (CASE 
+        WHEN diskon.persentase IS NULL 
+        THEN produk.harga 
+        ELSE (produk.harga - (produk.harga * diskon.persentase / 100)) 
+    END) as harga_akhir
+');
+        $this->db->from('produk');
+        $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id', 'left');
         $this->db->join('produk_diskon', 'produk_diskon.produk_id = produk.id_produk', 'left');
-        $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id');
+        $this->db->join('diskon', 'diskon.id = produk_diskon.diskon_id', 'left');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -23,10 +39,26 @@ class Produk_model extends CI_Model
 
     public function get_by_id($id)
     {
-        $this->db->select('produk.id_produk, produk.nama as pd_nama, produk.stok, produk.deskripsi, produk.harga, produk.categori_id ,kategori.nama as kt_nama, produk_diskon.nama as nama_diskon, produk_diskon.jumlah_diskon, (CASE WHEN produk_diskon.jumlah_diskon IS NULL THEN produk.harga ELSE (produk.harga - (produk.harga * produk_diskon.jumlah_diskon / 100)) END) as harga_akhir');
-        $this->db->from($this->_table);
+        $this->db->select('
+    produk.id_produk,
+    produk.nama as pd_nama,
+    produk.stok,
+    produk.deskripsi,
+    produk.harga,
+    produk.categori_id,
+    kategori.nama as kt_nama,
+    diskon.nama as nama_diskon,
+    diskon.persentase,
+    (CASE 
+        WHEN diskon.persentase IS NULL 
+        THEN produk.harga 
+        ELSE (produk.harga - (produk.harga * diskon.persentase / 100)) 
+    END) as harga_akhir
+');
+        $this->db->from('produk');
+        $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id', 'left');
         $this->db->join('produk_diskon', 'produk_diskon.produk_id = produk.id_produk', 'left');
-        $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id');
+        $this->db->join('diskon', 'diskon.id = produk_diskon.diskon_id', 'left');
         $this->db->where('produk.id_produk', $id);
         $query = $this->db->get();
         return $query->row_array();
@@ -57,10 +89,11 @@ class Produk_model extends CI_Model
 
     public function get_product_without_diskon()
     {
-        $this->db->select('produk.id_produk, produk.nama as pd_nama');
+        $this->db->select('produk.id_produk, produk.nama as pd_nama, diskon.id as diskon_id');
         $this->db->from($this->_table);
         $this->db->where('produk_diskon.produk_id IS NULL', NULL, FALSE);
         $this->db->join('produk_diskon', 'produk_diskon.produk_id = produk.id_produk', 'left');
+        $this->db->join('diskon', 'diskon.id = produk_diskon.diskon_id', 'left');
         $query = $this->db->get();
         return $query->result_array();
     }
