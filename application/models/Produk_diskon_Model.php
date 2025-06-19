@@ -7,10 +7,10 @@ class Produk_diskon_Model extends CI_Model
 
     public function get_all()
     {
-        $this->db->select('diskon.*, produk.nama, produk_diskon.produk_id');
+        $this->db->select('diskon.*, produk.nama as pd_nama, produk_diskon.produk_id');
         $this->db->from($this->_table);
-        $this->db->join('produk_diskon', 'produk_diskon.diskon_id = diskon.id');
-        $this->db->join('produk', 'produk.id_produk = produk_diskon.produk_id');
+        $this->db->join('produk_diskon', 'produk_diskon.diskon_id = diskon.id', 'left');
+        $this->db->join('produk', 'produk.id_produk = produk_diskon.produk_id', 'left');
         $this->db->order_by('diskon.id', 'ASC');
         $query = $this->db->get();
         return $query->result_array();
@@ -45,12 +45,41 @@ class Produk_diskon_Model extends CI_Model
 
     public function hapus($id)
     {
-        $this->db->delete($this->_table, array('id_diskon' => $id));
+        $this->db->delete($this->_table, array('id' => $id));
+    }
+
+    public function hapus_produk_diskon($id)
+    {
+        $this->db->delete('produk_diskon', array('produk_id' => $id));
     }
 
     public function ubah($id, $data)
     {
-        $this->db->where('id_diskon', $id);
+        $this->db->where('id', $id);
         return $this->db->update($this->_table, $data);
+    }
+
+    public function ubah_produk_dan_diskon($id, $data, $produk)
+    {
+        $this->db->trans_start();
+        $this->ubah($id, $data);
+        $produkLama = array_column($this->get_produk_diskon_by_diskon_id($id), 'produk_id');
+        $insert = array_diff($produk, $produkLama);
+        $delete = array_diff($produkLama, $produk);
+
+        foreach ($insert as $id_produk) {
+            $dataProdukDiskon = [
+                'produk_id' => $id_produk,
+                'diskon_id' => $id,
+            ];
+            $this->tambah_produk_diskon($dataProdukDiskon);
+        }
+
+        foreach ($delete as $id_produk) {
+            $this->hapus_produk_diskon($id_produk);
+        }
+
+        $this->db->trans_complete();
+        return $this->db->trans_status();
     }
 }

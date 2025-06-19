@@ -45,6 +45,7 @@
               <?php
               // Grouping manual by diskon_id
               $grouped = [];
+
               foreach ($list_produk_diskon as $row) {
                 $grouped[$row['id']]['id'] = $row['id'];
                 $grouped[$row['id']]['nama'] = $row['nama'];
@@ -52,7 +53,7 @@
                 $grouped[$row['id']]['deskripsi'] = $row['deskripsi'];
                 $grouped[$row['id']]['tanggal_mulai'] = $row['tanggal_mulai'];
                 $grouped[$row['id']]['tanggal_akhir'] = $row['tanggal_akhir'];
-                $grouped[$row['id']]['produk'][] = $row['nama']; // 'nama_produk' kamu sebut sebagai 'nama' di hasil dump
+                $grouped[$row['id']]['produk'][] = $row['pd_nama']; // 'nama_produk' kamu sebut sebagai 'nama' di hasil dump
               }
               ?>
               <?php $no = 1;

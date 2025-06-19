@@ -54,7 +54,7 @@
                     ?>
                  <div class="col d-flex">
                      <a href="<?= $link_detail ?>" class="produk-card card h-100 w-100 d-flex flex-column">
-                         <?php if (!empty($value['nama_diskon']) && !empty($value['persentase'])): ?>
+                         <?php if ($value['harga'] !== $value['harga_akhir']): ?>
                              <div class="diskon">
                                  <span class="badge bg-danger"><?= $value['nama_diskon'] . " " . $value['persentase'] . "%" ?></span>
                              </div>
