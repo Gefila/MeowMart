@@ -75,10 +75,8 @@
             </thead>
             <tbody>
                 <?php
-                $grand_total = 0;
                 foreach ($produk as $item):
-                    $sub_total = $item['harga_akhir'] * $item['jumlah'];
-                    $grand_total += $sub_total;
+                    $sub_total = $item['jumlah'] * $item['harga_akhir'];
                 ?>
                     <tr>
                         <td class="text-start">
@@ -129,7 +127,7 @@
                 <tr class="total-row">
                     <td colspan="3" class="text-end">Total Keseluruhan</td>
                     <td colspan="2" class="text-center">
-                        Rp. <?= number_format($grand_total, 0, ',', '.'); ?>
+                        Rp. <?= number_format($total, 0, ',', '.'); ?>
                         <form action="<?= base_url('pesanan/tambah')?>" method="post" onsubmit="confirm('Apakah anda yakin ingin checkout')">
                             <input type="hidden" name="keranjang_id" value="<?= $keranjang_id; ?>">
                             <button type="submit" class="btn btn-success mt-2">Checkout</button>

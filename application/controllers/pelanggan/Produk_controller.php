@@ -10,6 +10,8 @@ class Produk_controller extends CI_Controller
         $this->load->model('Produk_model');
         $this->load->model('Produk_kategori_model');
         $this->load->model('Produk_gambar_model');
+        $this->load->model('Produk_diskon_Model');
+        $this->load->helper('diskon_helper');
     }
 
     public function index()
@@ -59,6 +61,18 @@ class Produk_controller extends CI_Controller
             redirect('/');
             die;
         }
+        $produkDiskon = $this->Produk_diskon_Model->get_produk_diskon_by_produk_id($id);
+
+        if($produkDiskon){
+            foreach ($produkDiskon as $diskon) {
+                if (is_diskon_aktif($diskon['tanggal_mulai'], $diskon['tanggal_akhir'])) {
+                    $produk['harga_akhir'] = hitung_diskon($produk['harga'], $diskon['persentase'], $diskon['tanggal_mulai'], $diskon['tanggal_akhir']);
+                    $produk['nama_diskon'] = $diskon['nama'];
+                    $produk['persentase_diskon'] = $diskon['persentase'];
+                }
+            }
+        }
+        
         $data['produk'] = $produk;
         $data['list_gambar'] = $this->Produk_gambar_model->get_by_produk_id($id);
         $data['kategori'] = $this->Produk_kategori_model->get_by_id($produk['categori_id']);

@@ -58,7 +58,7 @@ class Keranjang_controller extends CI_Controller
         $produk = $this->Keranjang_model->get_detail_keranjang($keranjang_id);
         $total = 0;
         foreach ($produk as $item) {
-            $total += $item['harga'] * $item['jumlah'];
+            $total += $item['harga_akhir'] * $item['jumlah'];
         }
         $data['total'] = $total;
         $data['keranjang_id'] = $keranjang[0]['id_keranjang'];

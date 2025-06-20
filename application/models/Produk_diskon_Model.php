@@ -82,4 +82,13 @@ class Produk_diskon_Model extends CI_Model
         $this->db->trans_complete();
         return $this->db->trans_status();
     }
+
+    public function get_produk_diskon_by_produk_id($id_produk)
+    {
+        $this->db->select('diskon.*, produk_diskon.produk_id');
+        $this->db->from('diskon');
+        $this->db->join('produk_diskon', 'produk_diskon.diskon_id = diskon.id', 'left');
+        $this->db->where('produk_diskon.produk_id', $id_produk);
+        return $this->db->get()->result_array();
+    }
 }

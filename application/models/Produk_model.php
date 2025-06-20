@@ -3,6 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Produk_model extends CI_Model
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->helper('diskon_helper');
+    }
+
     private $_table = "produk";
 
     public function get_all()
@@ -113,5 +119,26 @@ class Produk_model extends CI_Model
         $this->db->join('diskon', 'diskon.id = produk_diskon.diskon_id', 'left');
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    public function get_produk_by_id($id)
+    {
+        $this->db->select('produk.id_produk, produk.nama as pd_nama, produk.stok, produk.deskripsi, produk.harga, kategori.nama as kt_nama, diskon.id as diskon_id, diskon.nama as nama_diskon, diskon.persentase, diskon.tanggal_mulai, diskon.tanggal_akhir');
+        $this->db->from($this->_table);
+        $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id', 'left');
+        $this->db->join('produk_diskon', 'produk_diskon.produk_id = produk.id_produk', 'left');
+        $this->db->join('diskon', 'diskon.id = produk_diskon.diskon_id', 'left');
+        $this->db->where('produk.id_produk', $id);
+        $query = $this->db->get();
+        $produk = $query->result_array();
+        if (count($produk) === 1) {
+            return $produk[0];
+        } else {
+            foreach ($produk as $produk) {
+                if (is_diskon_aktif($produk['tanggal_mulai'], $produk['tanggal_akhir'])) {
+                    return $produk;
+                }
+            }
+        }
     }
 }
