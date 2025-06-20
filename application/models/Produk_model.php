@@ -69,11 +69,8 @@ class Produk_model extends CI_Model
     kategori.nama as kt_nama,
     diskon.nama as nama_diskon,
     diskon.persentase,
-    (CASE 
-        WHEN diskon.persentase IS NULL 
-        THEN produk.harga 
-        ELSE (produk.harga - (produk.harga * diskon.persentase / 100)) 
-    END) as harga_akhir
+    diskon.tanggal_mulai,
+    diskon.tanggal_akhir,
 ');
         $this->db->from('produk');
         $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id', 'left');

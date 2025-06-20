@@ -28,35 +28,20 @@ class Keranjang_controller extends CI_Controller
         }
     }
 
+    function hitung_diskon($harga, $persentase_diskon)
+    {
+        if ($persentase_diskon > 0) {
+            $diskon = ($harga * $persentase_diskon) / 100;
+            return $harga - $diskon;
+        }
+        return $harga;
+    }
+
     public function index()
     {
         $pelanggan_id = $this->session->userdata('id');
         $keranjang = $this->Keranjang_model->get_by_pelanggan($pelanggan_id);
-        if ($keranjang) {
-            $keranjang_id = $keranjang[0]['id_keranjang'];
-            $keranjang_produk = $this->Keranjang_produk_model->get_by_keranjang($keranjang_id);
-            $produk = [];
-            foreach ($keranjang_produk as $item) {
-                $produk_data = $this->Produk_model->get_by_id($item['produk_id']);
-                if ($produk_data) {
-                    $produk_data['id_keranjang_produk'] = $item['id_keranjang_produk'];
-                    $produk_data['jumlah'] = $item['jumlah'];
-                    $produk_data['gambar'] = $this->Produk_gambar_model->get_by_produk_id($item['produk_id']);
-                    $produk[] = $produk_data;
-                }
-            }
-            $total = 0;
-            foreach ($produk as $item) {
-                $total += $item['harga'] * $item['jumlah'];
-            }
-            $data['total'] = $total;
-            $data['keranjang_id'] = $keranjang[0]['id_keranjang'];
-            $data['produk'] = $produk;
-            $data['list_kategori'] = $this->Produk_kategori_model->get_all();
-            $this->load->view('pelanggan/templates/header');
-            $this->load->view('pelanggan/keranjang', $data);
-            $this->load->view('pelanggan/templates/footer');
-        } else {
+        if (!$keranjang) {
             $this->session->set_flashdata('message', '
             <script>
             Swal.fire({
@@ -68,6 +53,20 @@ class Keranjang_controller extends CI_Controller
             </script>');
             redirect(base_url());
         }
+
+        $keranjang_id = $keranjang[0]['id_keranjang'];
+        $produk = $this->Keranjang_model->get_detail_keranjang($keranjang_id);
+        $total = 0;
+        foreach ($produk as $item) {
+            $total += $item['harga'] * $item['jumlah'];
+        }
+        $data['total'] = $total;
+        $data['keranjang_id'] = $keranjang[0]['id_keranjang'];
+        $data['produk'] = $produk;
+        $data['list_kategori'] = $this->Produk_kategori_model->get_all();
+        $this->load->view('pelanggan/templates/header');
+        $this->load->view('pelanggan/keranjang', $data);
+        $this->load->view('pelanggan/templates/footer');
     }
 
     public function tambah()
