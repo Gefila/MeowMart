@@ -19,6 +19,12 @@ class Keranjang_produk_model extends CI_Model{
         ])->row_array();
     }
 
+    public function hapus($id)
+    {
+        $this->db->delete($this->table, ['id_keranjang_produk' => $id]);
+        return ($this->db->affected_rows() !== 1) ? false : true;
+    }
+
     public function tambah($data)
     {
         $this->db->insert($this->table, $data);
