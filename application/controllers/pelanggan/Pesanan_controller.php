@@ -1,10 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pesanan_controller extends CI_Controller
-{
-    public function __construct()
-    {
+class Pesanan_controller extends CI_Controller {
+    public function __construct() {
         parent::__construct();
         $this->load->model('Keranjang_model');
         $this->load->model('Keranjang_produk_model');
@@ -12,32 +10,18 @@ class Pesanan_controller extends CI_Controller
         $this->load->model('Produk_gambar_model');
         $this->load->model('Pesanan_model');
         $this->load->model('Pesanan_produk_model');
-        if (!$this->session->has_userdata('pelanggan_login')) {
-            redirect('login');
-            die;
-        }
+        cek_pelanggan_login();
     }
 
-    public function index()
-    {
+    public function index() {
         $pelanggan_id = $this->session->userdata('id');
-        $pesanan = $this->Pesanan_model->get_by_pelanggan($pelanggan_id);
+        $pesanan = $this->Pesanan_model->get_by_pelanggan_id($pelanggan_id);
         if (!$pesanan) {
-            $this->session->set_flashdata('message', '
-            <script>
-            Swal.fire({
-                icon: "info",
-                title: "Tidak ada pesanan",
-                text: "Anda belum memiliki pesanan.",
-                confirmButtonText: "OK"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = "' . base_url('produk') . '";
-                }
-            });
-            </script>');
+            swal('info', 'Tidak ada pesanan', 'Anda belum memiliki pesanan.');
+            redirect('produk');
             return;
         }
+
 
         $data['pesanan'] = [];
         foreach ($pesanan as $item) {
@@ -62,8 +46,7 @@ class Pesanan_controller extends CI_Controller
         $this->load->view('pelanggan/templates/footer');
     }
 
-    public function tambah_pesanan()
-    {
+    public function tambah_pesanan() {
         $pelanggan_id = $this->session->userdata('id');
         $id_keranjang = $this->input->post('keranjang_id');
         $keranjang = $this->Keranjang_model->getKeranjangByIdAndPelanggan($id_keranjang, $pelanggan_id);
@@ -85,10 +68,33 @@ class Pesanan_controller extends CI_Controller
             return;
         }
         $keranjang_produk = $this->Keranjang_produk_model->get_by_keranjang($id_keranjang);
+        $total = 0;
+        foreach ($keranjang_produk as $item) {
+            $produk = $this->Produk_model->get_by_id($item['produk_id']);
+            if ($produk) {
+                $total += $produk['harga'] * $item['jumlah'];
+            } else {
+                $this->session->set_flashdata('message', '
+                <script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Produk tidak ditemukan",
+                    text: "Salah satu produk dalam keranjang tidak ditemukan.",
+                    confirmButtonText: "OK"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "' . base_url('keranjang') . '";
+                    }
+                });
+                </script>');
+                redirect('keranjang');
+                return;
+            }
+        }
         $data_pesanan = [
             'pelanggan_id' => $pelanggan_id,
             'tanggal_pesanan' => date('Y-m-d H:i:s'),
-            'total_pesanan' => $keranjang['total'],
+            'total_pesanan' => $total,
         ];
         $id_pesanan = $this->Pesanan_model->tambah($data_pesanan);
         if (!$id_pesanan) {
@@ -142,6 +148,38 @@ class Pesanan_controller extends CI_Controller
         });
         </script>
         ');
-        redirect('pesanan');
+        redirect('pesanan/detail/' . $id_pesanan);
+    }
+
+    public function detail($id) {
+        $pelanggan_id = $this->session->userdata('id');
+        $pesanan = $this->Pesanan_model->get_by_id($id);
+        if (!$pesanan || $pesanan['pelanggan_id'] != $pelanggan_id) {
+            $this->session->set_flashdata('message', 'Pesanan tidak ditemukan atau tidak valid.');
+            redirect('pesanan');
+            return;
+        }
+        $pesanan_produk = $this->Pesanan_produk_model->get_by_id_pesanan($id);
+        $produk_data = [];
+        foreach ($pesanan_produk as $item) {
+            $produk = $this->Produk_model->get_by_id($item['produk_id']);
+            if ($produk) {
+                $gambar_produk = $this->Produk_gambar_model->get_by_produk_id($item['produk_id']);
+                $item['harga'] = $produk['harga'];
+                $item['nama_produk'] = $produk['pd_nama'];
+                $item['gambar'] = !empty($gambar_produk) ? base_url('uploads/produk/' . $gambar_produk[0]['nama_gambar']) : null;
+                $produk_data[] = $item;
+            }
+        }
+        $data['pesanan'] = [
+            'id_pesanan' => $pesanan['id_pesanan'],
+            'tanggal_pesanan' => date('d M Y, H:i', strtotime($pesanan['tanggal_pesanan'])),
+            'total_pesanan' => number_format($pesanan['total_pesanan'], 0, ',', '.'),
+            'produk' => $produk_data,
+        ];
+
+        $this->load->view('pelanggan/templates/header');
+        $this->load->view('pelanggan/pesanan_detail', $data);
+        $this->load->view('pelanggan/templates/footer');
     }
 }

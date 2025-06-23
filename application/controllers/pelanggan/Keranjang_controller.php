@@ -87,7 +87,7 @@ class Keranjang_controller extends CI_Controller {
             return redirect(base_url('keranjang'));
         }
 
-        $hapus_keranjang = $this->Keranjang_model->hapus_produk_dari_keranjang(
+        $hapus_keranjang = $this->Keranjang_model->hapus_produk_keranjang(
             $this->input->post('id_keranjang_produk')
         );
 

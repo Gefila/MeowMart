@@ -97,4 +97,9 @@ $route['keranjang/hapus'] = 'pelanggan/Keranjang_controller/hapus_produk_keranja
 
 #pesanan
 $route['pesanan'] = 'pelanggan/Pesanan_controller/index';
+$route['pesanan/detail/(:num)'] = 'pelanggan/Pesanan_controller/detail/$1';
 $route['pesanan/tambah'] = 'pelanggan/Pesanan_controller/tambah_pesanan';
+
+#pembayaran
+$route['pembayaran/(:num)'] = 'pelanggan/Pembayaran_controller/index/$1';
+$route['pembayaran/bayar'] = 'pelanggan/Pembayaran_controller/bayar';
