@@ -11,6 +11,23 @@ class Produk_model extends CI_Model
 
     private $_table = "produk";
 
+    public function get_all_produk(){
+        $this->db->select('produk.id_produk, produk.nama as pd_nama, produk.stok, produk.deskripsi, produk.harga, kategori.nama as kt_nama');
+        $this->db->from($this->_table);
+        $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id', 'left');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function get_produk_by_id($id){
+        $this->db->select('produk.id_produk, produk.nama as pd_nama, produk.stok, produk.deskripsi, produk.harga, kategori.nama as kt_nama');
+        $this->db->from($this->_table);
+        $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id', 'left');
+        $this->db->where('produk.id_produk', $id);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+    
     public function get_all()
     {
         $this->db->select('
@@ -145,7 +162,7 @@ class Produk_model extends CI_Model
         return $query->result_array();
     }
 
-    public function get_produk_by_id($id)
+    public function get_produk_by_id2($id)
     {
         $this->db->select('produk.id_produk, produk.nama as pd_nama, produk.stok, produk.deskripsi, produk.harga, kategori.nama as kt_nama, diskon.id as diskon_id, diskon.nama as nama_diskon, diskon.persentase, diskon.tanggal_mulai, diskon.tanggal_akhir');
         $this->db->from($this->_table);
