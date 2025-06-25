@@ -70,6 +70,12 @@
                                   <p>Produk Diskon</p>
                               </a>
                           </li>
+                          <li class="nav-item">
+                              <a href="<?= base_url() ?>admin/transaksi" class="nav-link <?= ($this->uri->segment(2) == 'transaksi') ? 'active' : '' ?>">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>Transaksi</p>
+                              </a>
+                          </li>
                       </ul>
                   </li>
                   <li class="nav-item">
