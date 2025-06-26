@@ -71,11 +71,11 @@ $route['admin/produk/hapus/(:num)'] = 'administrator/Produk_controller/hapus_pro
 $route['admin/produk/ubah_gambar/(:num)'] = 'administrator/Produk_controller/ubah_gambar/$1';
 $route['admin/produk/hapus_gambar/(:num)'] = 'administrator/Produk_controller/hapus_gambar/$1';
 
-#produk_diskon
-$route['admin/produk_diskon'] = 'administrator/Produk_diskon_Controller/index';
-$route['admin/produk_diskon/tambah'] = 'administrator/Produk_diskon_Controller/tambah_produk_diskon';
-$route['admin/produk_diskon/hapus/(:num)'] = 'administrator/Produk_diskon_Controller/hapus_produk_diskon/$1';
-$route['admin/produk_diskon/ubah/(:num)'] = 'administrator/Produk_diskon_Controller/ubah_produk_diskon/$1';
+#diskon
+$route['admin/diskon'] = 'administrator/Diskon_controller/index';
+$route['admin/diskon/tambah'] = 'administrator/Diskon_controller/tambah_diskon';
+$route['admin/diskon/hapus/(:num)'] = 'administrator/Diskon_controller/hapus_diskon/$1';
+$route['admin/diskon/ubah/(:num)'] = 'administrator/Diskon_controller/ubah_diskon/$1';
 
 #pelanggan
 $route['login'] = 'pelanggan/Pelanggan_controller/login';

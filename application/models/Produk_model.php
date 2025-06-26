@@ -1,17 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Produk_model extends CI_Model
-{
-    public function __construct()
-    {
+class Produk_model extends CI_Model {
+    public function __construct() {
         parent::__construct();
         $this->load->helper('diskon_helper');
     }
 
     private $_table = "produk";
 
-    public function get_all_produk(){
+    public function get_all_produk() {
         $this->db->select('produk.id_produk, produk.nama as pd_nama, produk.stok, produk.deskripsi, produk.harga, kategori.nama as kt_nama');
         $this->db->from($this->_table);
         $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id', 'left');
@@ -19,7 +17,7 @@ class Produk_model extends CI_Model
         return $query->result_array();
     }
 
-    public function get_produk_by_id($id){
+    public function get_produk_by_id($id) {
         $this->db->select('produk.id_produk, produk.nama as pd_nama, produk.stok, produk.deskripsi, produk.harga, kategori.nama as kt_nama');
         $this->db->from($this->_table);
         $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id', 'left');
@@ -27,9 +25,8 @@ class Produk_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-    
-    public function get_all()
-    {
+
+    public function get_all() {
         $this->db->select('
             produk.id_produk,
             produk.nama AS pd_nama,
@@ -61,8 +58,7 @@ class Produk_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function get_all_product($id)
-    {
+    public function get_all_produk_with_diskon($id) {
         $id = (int) $id; // untuk keamanan
         $subquery = '(SELECT produk_id, diskon_id FROM produk_diskon WHERE diskon_id = ' . $id . ') AS pd_diskon';
 
@@ -74,14 +70,12 @@ class Produk_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function tambah($data)
-    {
+    public function tambah($data) {
         $this->db->insert($this->_table, $data);
         return $this->db->insert_id();
     }
 
-    public function get_by_id($id)
-    {
+    public function get_by_id($id) {
         $this->db->select('
     produk.id_produk,
     produk.nama as pd_nama,
@@ -104,21 +98,18 @@ class Produk_model extends CI_Model
         return $query->row_array();
     }
 
-    public function hapus($id)
-    {
+    public function hapus($id) {
         $this->db->delete($this->_table, array('id_produk' => $id));
     }
 
-    public function ubah($data, $id)
-    {
+    public function ubah($data, $id) {
         $this->db->where('id_produk', $id);
         $this->db->update($this->_table, $data);
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
-    public function get_by_kategori_id($id)
-    {
-                $this->db->select('
+    public function get_by_kategori_id($id) {
+        $this->db->select('
             produk.id_produk,
             produk.nama AS pd_nama,
             produk.stok,
@@ -151,8 +142,7 @@ class Produk_model extends CI_Model
         return $query->result_array();
     }
 
-    public function get_product_without_diskon()
-    {
+    public function get_product_without_diskon() {
         $this->db->select('produk.id_produk, produk.nama as pd_nama, diskon.id as diskon_id');
         $this->db->from($this->_table);
         $this->db->where('produk_diskon.produk_id IS NULL', NULL, FALSE);
@@ -162,8 +152,7 @@ class Produk_model extends CI_Model
         return $query->result_array();
     }
 
-    public function get_produk_by_id2($id)
-    {
+    public function get_produk_by_id2($id) {
         $this->db->select('produk.id_produk, produk.nama as pd_nama, produk.stok, produk.deskripsi, produk.harga, kategori.nama as kt_nama, diskon.id as diskon_id, diskon.nama as nama_diskon, diskon.persentase, diskon.tanggal_mulai, diskon.tanggal_akhir');
         $this->db->from($this->_table);
         $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id', 'left');
@@ -183,8 +172,7 @@ class Produk_model extends CI_Model
         }
     }
 
-    public function get_produk_stok($id)
-    {
+    public function get_produk_stok($id) {
         $this->db->select('produk.*');
         $this->db->from($this->_table);
         $this->db->where('id_produk', $id);

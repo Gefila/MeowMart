@@ -23,18 +23,18 @@
   			<form method="post" enctype="multipart/form-data">
   				<div class="card card-body">
   					<div class="form-group ">
-  						<label for="nama_produk_diskon">Nama Produk Diskon</label>
-  						<input type="text" class="form-control <?= (form_error('nama_produk_diskon')) ? 'is-invalid' : ''; ?>" id="nama_produk_diskon" name="nama_produk_diskon" placeholder="Masukkan Nama Produk Diskon">
-  						<small class="text-danger mb-0"><?= strip_tags(form_error('nama_produk_diskon')); ?></small>
+  						<label for="nama_diskon">Nama Diskon</label>
+  						<input type="text" class="form-control <?= (form_error('nama_diskon')) ? 'is-invalid' : ''; ?>" id="nama_diskon" name="nama_diskon" placeholder="Masukkan Nama Diskon">
+  						<small class="text-danger mb-0"><?= strip_tags(form_error('nama_diskon')); ?></small>
   					</div>
   					<div class="form-group ">
-  						<label for="persentase_produk_diskon">Persentase Diskon</label>
-  						<input type="number" class="form-control <?= (form_error('persentase_produk_diskon')) ? 'is-invalid' : ''; ?>" id="persentase_produk_diskon" name="persentase_produk_diskon" placeholder="Masukkan persentase Diskon">
-  						<small class="text-danger mb-0"><?= strip_tags(form_error('persentase_produk_diskon')); ?></small>
+  						<label for="persentase_diskon">Persentase Diskon</label>
+  						<input type="number" class="form-control <?= (form_error('persentase_diskon')) ? 'is-invalid' : ''; ?>" id="persentase_diskon" name="persentase_diskon" placeholder="Masukkan persentase Diskon">
+  						<small class="text-danger mb-0"><?= strip_tags(form_error('persentase_diskon')); ?></small>
   					</div>
   					<div class="form-group">
-  						<label for="deskripsi_produk_diskon">Deskripsi</label>
-  						<textarea class="form-control" rows="10" col="30" name="deskripsi_produk_diskon" id="deskripsi_produk_diskon" placeholder="Masukkan Deskripsi Produk Diskon"></textarea>
+  						<label for="deskripsi_diskon">Deskripsi</label>
+  						<textarea class="form-control" rows="10" col="30" name="deskripsi_diskon" id="deskripsi_diskon" placeholder="Masukkan Deskripsi Diskon"></textarea>
   					</div>
   					<div class="form-group">
   						<label for="tanggal_mulai_diskon">Tanggal Mulai Diskon</label>
@@ -56,11 +56,11 @@
   						</select>
   					</div>
   					<div>
-  						<a href="<?= base_url('admin/produk_diskon') ?>" class="btn btn-danger">
+  						<a href="<?= base_url('admin/diskon') ?>" class="btn btn-danger">
   							<i class="fa fa-arrow-left"></i> Kembali
   						</a>
   						<button class="btn btn-primary">
-  							<i class="fa fa-plus"></i> Tambah Produk Diskon
+  							<i class="fa fa-plus"></i> Tambah Diskon
   						</button>
   					</div>
   				</div>

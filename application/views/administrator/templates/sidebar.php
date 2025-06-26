@@ -36,7 +36,7 @@
                   <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                   <li class="nav-item">
-                      <a href="<?= base_url() ?>admin" class="nav-link <?= ($this->uri->segment(1) == 'admin' && $this->uri->segment(2) == NULL) ? 'active' : '' ?>">
+                      <a href="<?= base_url() ?>admin" class="nav-link <?= is_active('admin') ?>">
                           <i class="nav-icon fas fa-chart-pie"></i>
                           <p>
                               Dashboard
@@ -44,7 +44,7 @@
                       </a>
                   </li>
                   <li class="nav-item menu-open">
-                      <a href="#" class="nav-link <?= ($this->uri->segment(1) == 'admin' && $this->uri->segment(2) !== NULL) ? 'active' : '' ?>">
+                      <a href="#" class="nav-link <?= is_active('admin', ' ') ?>">
                           <i class="nav-icon fas fa-tachometer-alt"></i>
                           <p>
                               Master
@@ -53,27 +53,44 @@
                       </a>
                       <ul class="nav nav-treeview">
                           <li class="nav-item">
-                              <a href="<?= base_url() ?>admin/kategori" class="nav-link <?= ($this->uri->segment(2) == 'kategori') ? 'active' : '' ?>">
+                              <a href="<?= base_url() ?>admin/kategori" class="nav-link <?= is_active('', 'kategori') ?>">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>Kategori</p>
                               </a>
                           </li>
                           <li class="nav-item">
-                              <a href="<?= base_url() ?>admin/produk" class="nav-link <?= ($this->uri->segment(2) == 'produk') ? 'active' : '' ?>">
+                              <a href="<?= base_url() ?>admin/produk" class="nav-link <?= is_active('', 'produk') ?>">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>Produk</p>
                               </a>
                           </li>
                           <li class="nav-item">
-                              <a href="<?= base_url() ?>admin/produk_diskon" class="nav-link <?= ($this->uri->segment(2) == 'produk_diskon') ? 'active' : '' ?>">
+                              <a href="<?= base_url() ?>admin/diskon" class="nav-link <?= is_active('', 'diskon') ?>">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>Produk Diskon</p>
+                                  <p>Diskon</p>
                               </a>
                           </li>
+                      </ul>
+                  </li>
+                  <li class="nav-item">
+                      <a href="#" class="nav-link <?= is_active('admin', 'pelanggan') ?>">
+                          <i class="nav-icon fas fa-users"></i>
+                          <p>
+                              Pelanggan
+                              <i class="right fas fa-angle-left"></i>
+                          </p>
+                      </a>
+                      <ul class="nav nav-treeview">
                           <li class="nav-item">
                               <a href="<?= base_url() ?>admin/transaksi" class="nav-link <?= ($this->uri->segment(2) == 'transaksi') ? 'active' : '' ?>">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>Transaksi</p>
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a href="<?= base_url() ?>admin/pesanan" class="nav-link <?= ($this->uri->segment(2) == 'pesanan') ? 'active' : '' ?>">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>Pesanan</p>
                               </a>
                           </li>
                       </ul>
