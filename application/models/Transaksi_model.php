@@ -52,14 +52,23 @@ class Transaksi_model extends CI_Model {
         return array_values($grouped);
     }
 
-    public function cetak($id_pesanan) {
-        $this->load->model('Transaksi_model');
-        $data['pesanan'] = $this->Transaksi_model->get_detail_pesanan($id_pesanan);
-
-        if (!$data['pesanan']) {
-            show_404();
-        }
-
-        $this->load->view('transaksi/cetak', $data);
+    public function get_list_transaksi(){
+        $this->db->select('
+            pesanan.id_pesanan,
+            pesanan.tanggal_pesanan,
+            pesanan.status,
+            pesanan.total_pesanan,
+            pelanggan.nama_pelanggan,
+            produk.nama AS nama_produk,
+            produk.harga AS harga_produk,
+            pesanan_produk.harga_saat_pembelian,
+            pesanan_produk.jumlah,
+            (produk.harga * pesanan_produk.jumlah) AS subtotal
+        ');
+        $this->db->from('pesanan');
+        $this->db->join('pelanggan', 'pesanan.pelanggan_id = pelanggan.id_pelanggan');
+        $this->db->join('pesanan_produk', 'pesanan.id_pesanan = pesanan_produk.pesanan_id');
+        $this->db->join('produk', 'pesanan_produk.produk_id = produk.id_produk');
+        $query = $this->db->get()->result_array();
     }
 }

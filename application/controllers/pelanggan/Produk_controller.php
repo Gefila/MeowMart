@@ -2,20 +2,17 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Produk_controller extends CI_Controller
-{
-    public function __construct()
-    {
+class Produk_controller extends CI_Controller {
+    public function __construct() {
         parent::__construct();
         $this->load->model('Produk_model');
         $this->load->model('Produk_kategori_model');
         $this->load->model('Produk_gambar_model');
-        $this->load->model('Produk_diskon_Model');
+        $this->load->model('Diskon_model');
         $this->load->helper('diskon_helper');
     }
 
-    public function index()
-    {
+    public function index() {
         $data['gambar_model'] = $this->Produk_gambar_model;
         $data['list_produk'] = $this->Produk_model->get_all();
         $data['list_kategori'] = $this->Produk_kategori_model->get_all();
@@ -32,13 +29,13 @@ class Produk_controller extends CI_Controller
         $this->load->view('pelanggan/templates/footer');
     }
 
-    public function kategori($id=0){
-        if($id == 0){
+    public function kategori($id = 0) {
+        if ($id == 0) {
             redirect('/');
             die;
         }
         $kategori = $this->Produk_kategori_model->get_by_id($id);
-        if(!$kategori){
+        if (!$kategori) {
             redirect('/');
             die;
         }
@@ -51,28 +48,30 @@ class Produk_controller extends CI_Controller
         $this->load->view('pelanggan/templates/footer');
     }
 
-    public function detail($id=0){
-        if($id == 0){
+    public function detail($id = 0) {
+        if ($id == 0) {
             redirect('/');
             die;
         }
         $produk = $this->Produk_model->get_by_id($id);
-        if(!$produk){
+        if (!$produk) {
             redirect('/');
             die;
         }
-        $produkDiskon = $this->Produk_diskon_Model->get_produk_diskon_by_produk_id($id);
-
-        if($produkDiskon){
-            foreach ($produkDiskon as $diskon) {
-                if (is_diskon_aktif($diskon['tanggal_mulai'], $diskon['tanggal_akhir'])) {
-                    $produk['harga_akhir'] = hitung_diskon($produk['harga'], $diskon['persentase'], $diskon['tanggal_mulai'], $diskon['tanggal_akhir']);
-                    $produk['nama_diskon'] = $diskon['nama'];
-                    $produk['persentase_diskon'] = $diskon['persentase'];
-                }
-            }
+        $produkDiskon = $this->Diskon_model->get_produk_diskon_by_produk_id($id);
+        $filteredDiskon = filter_diskon_terbesar_dan_aktif($produkDiskon);
+        if ($filteredDiskon) {
+            $produk['persentase'] = $filteredDiskon['persentase'];
+            $produk['harga_akhir'] = hitung_diskon($produk['harga'], $filteredDiskon['persentase'], $filteredDiskon['tanggal_mulai'], $filteredDiskon['tanggal_akhir']);
+        } else {
+            $produk['diskon'] = null;
+            $produk['nama_diskon'] = null;
+            $produk['persentase'] = null;
+            $produk['tanggal_mulai'] = null;
+            $produk['tanggal_akhir'] = null;
+            $produk['harga_akhir'] = $produk['harga'];
         }
-        
+
         $data['produk'] = $produk;
         $data['list_gambar'] = $this->Produk_gambar_model->get_by_produk_id($id);
         $data['kategori'] = $this->Produk_kategori_model->get_by_id($produk['categori_id']);

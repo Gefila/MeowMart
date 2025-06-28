@@ -16,7 +16,7 @@ class Transaksi_controller extends CI_Controller {
             'username' => $this->session->userdata('username'),
             'full_name' => $this->session->userdata('full_name')
         );
-        $data['transaksi'] = $this->Transaksi_model->get_ringkasan_transaksi();
+        $data['list_transaksi'] = $this->Transaksi_model->get_list_transaksi();
         $this->load->view('administrator/templates/header', $data);
         $this->load->view('administrator/templates/sidebar', $data);
         $this->load->view('administrator/transaksi/index', $data);

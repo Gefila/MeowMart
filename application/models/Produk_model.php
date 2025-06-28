@@ -46,16 +46,62 @@ class Produk_model extends CI_Model {
         $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id', 'left');
         $this->db->join('(
             SELECT 
-                diskon.id, 
-                diskon.nama, 
-                diskon.persentase, 
-                produk_diskon.produk_id
-            FROM diskon
-            JOIN produk_diskon ON produk_diskon.diskon_id = diskon.id
-            WHERE CURDATE() BETWEEN diskon.tanggal_mulai AND diskon.tanggal_akhir
+                d.id, 
+                d.nama, 
+                d.persentase, 
+                pd.produk_id
+            FROM diskon d
+            JOIN produk_diskon pd ON pd.diskon_id = d.id
+            WHERE CURDATE() BETWEEN d.tanggal_mulai AND d.tanggal_akhir
+            AND d.persentase = (
+                SELECT MAX(d2.persentase)
+                FROM diskon d2
+                JOIN produk_diskon pd2 ON pd2.diskon_id = d2.id
+                WHERE pd2.produk_id = pd.produk_id
+                AND CURDATE() BETWEEN d2.tanggal_mulai AND d2.tanggal_akhir)
         ) AS diskon_aktif', 'diskon_aktif.produk_id = produk.id_produk', 'left');
 
         return $this->db->get()->result_array();
+    }
+
+    public function get_by_kategori_id($id) {
+        $this->db->select('
+            produk.id_produk,
+            produk.nama AS pd_nama,
+            produk.stok,
+            produk.deskripsi,
+            produk.harga,
+            kategori.nama AS kt_nama,
+            kategori.id_kategori,
+            diskon_aktif.nama AS nama_diskon,
+            diskon_aktif.persentase,
+            diskon_aktif.id AS diskon_id,
+            CASE
+                WHEN diskon_aktif.persentase IS NOT NULL THEN (produk.harga - (produk.harga * diskon_aktif.persentase / 100))
+                ELSE produk.harga
+            END AS harga_akhir
+        ');
+        $this->db->from('produk');
+        $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id', 'left');
+        $this->db->join('(
+            SELECT 
+                d.id, 
+                d.nama, 
+                d.persentase, 
+                pd.produk_id
+            FROM diskon d
+            JOIN produk_diskon pd ON pd.diskon_id = d.id
+            WHERE CURDATE() BETWEEN d.tanggal_mulai AND d.tanggal_akhir
+            AND d.persentase = (
+                SELECT MAX(d2.persentase)
+                FROM diskon d2
+                JOIN produk_diskon pd2 ON pd2.diskon_id = d2.id
+                WHERE pd2.produk_id = pd.produk_id
+                AND CURDATE() BETWEEN d2.tanggal_mulai AND d2.tanggal_akhir)
+        ) AS diskon_aktif', 'diskon_aktif.produk_id = produk.id_produk', 'left');
+        $this->db->where('produk.categori_id', $id);
+        $query = $this->db->get();
+        return $query->result_array();
     }
 
     public function get_all_produk_with_diskon($id) {
@@ -108,39 +154,7 @@ class Produk_model extends CI_Model {
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
-    public function get_by_kategori_id($id) {
-        $this->db->select('
-            produk.id_produk,
-            produk.nama AS pd_nama,
-            produk.stok,
-            produk.deskripsi,
-            produk.harga,
-            kategori.nama AS kt_nama,
-            kategori.id_kategori,
-            diskon_aktif.nama AS nama_diskon,
-            diskon_aktif.persentase,
-            diskon_aktif.id AS diskon_id,
-            CASE
-                WHEN diskon_aktif.persentase IS NOT NULL THEN (produk.harga - (produk.harga * diskon_aktif.persentase / 100))
-                ELSE produk.harga
-            END AS harga_akhir
-        ');
-        $this->db->from('produk');
-        $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id', 'left');
-        $this->db->join('(
-            SELECT 
-                diskon.id, 
-                diskon.nama, 
-                diskon.persentase, 
-                produk_diskon.produk_id
-            FROM diskon
-            JOIN produk_diskon ON produk_diskon.diskon_id = diskon.id
-            WHERE CURDATE() BETWEEN diskon.tanggal_mulai AND diskon.tanggal_akhir
-        ) AS diskon_aktif', 'diskon_aktif.produk_id = produk.id_produk', 'left');
-        $this->db->where('produk.categori_id', $id);
-        $query = $this->db->get();
-        return $query->result_array();
-    }
+
 
     public function get_product_without_diskon() {
         $this->db->select('produk.id_produk, produk.nama as pd_nama, diskon.id as diskon_id');

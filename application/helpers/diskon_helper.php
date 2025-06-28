@@ -17,3 +17,17 @@ if (!function_exists('hitung_diskon')) {
         return $harga;
     }
 }
+
+if (!function_exists('filter_diskon_terbesar')) {
+    function filter_diskon_terbesar_dan_aktif($diskon_list) {
+        $diskonTerbesar = null;
+        foreach ($diskon_list as $diskon) {
+            if (is_diskon_aktif($diskon['tanggal_mulai'], $diskon['tanggal_akhir'])) {
+                if ($diskonTerbesar === null || $diskon['persentase'] > $diskonTerbesar['persentase']) {
+                    $diskonTerbesar = $diskon;
+                }
+            }
+        }
+        return $diskonTerbesar;
+    }
+}
