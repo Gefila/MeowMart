@@ -217,7 +217,7 @@
         border-bottom: 1px solid #e2e8f0;
     }
 
-    .nav-link {
+    .nav-link2 {
         color: var(--dark-color);
         font-weight: 600;
         padding: 0.75rem 1.5rem;
@@ -225,12 +225,12 @@
         position: relative;
     }
 
-    .nav-link.active {
+    .nav-link2.active {
         color: var(--primary-color);
         background: transparent;
     }
 
-    .nav-link.active::after {
+    .nav-link2.active::after {
         content: '';
         position: absolute;
         bottom: -1px;
@@ -458,7 +458,6 @@
                         </div>
                     <?php endif; ?>
                 </div>
-
                 <?php if ($produk['stok'] > 10): ?>
                     <div class="stock-status in-stock">
                         <i class="fas fa-check-circle me-1"></i> In Stock (<?= $produk['stok'] ?> available)
@@ -484,7 +483,7 @@
                     <form action="<?= base_url("keranjang/tambah") ?>" method="post" class="w-100">
                         <input type="hidden" name="id_produk" value="<?= $produk['id_produk'] ?>">
                         <input type="hidden" name="jumlah" class="quantity-submit" value="1">
-                        <button type="submit" class="btn btn-primary2">
+                        <button type="submit" class="btn btn-primary2" <?= (intval($produk['stok']) <= 0) ? 'disabled' : '' ?>>
                             <i class="fas fa-shopping-cart me-2"></i> Add to Cart
                         </button>
                     </form>
@@ -530,13 +529,13 @@
     <div class="product-tabs">
         <ul class="nav nav-tabs" id="productTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">Description</button>
+                <button class="nav-link2 active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">Description</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs" type="button" role="tab" aria-controls="specs" aria-selected="false">Specifications</button>
+                <button class="nav-link2" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs" type="button" role="tab" aria-controls="specs" aria-selected="false">Specifications</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">Reviews</button>
+                <button class="nav-link2" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">Reviews</button>
             </li>
         </ul>
         <div class="tab-content" id="productTabsContent">
@@ -655,47 +654,66 @@
 
     <!-- Related Products Section -->
     <div class="mt-5">
-        <h4 class="mb-4" style="font-weight: 600;">Rekomendasi Produk</h4>
-        <div class="row">
-            <!-- Related product cards would go here -->
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <img src="https://via.placeholder.com/300" class="card-img-top" alt="Related Product">
-                    <div class="card-body">
-                        <h5 class="card-title">Royal Canin Adult</h5>
-                        <p class="card-text text-danger fw-bold">Rp 150,000</p>
-                    </div>
+        <h4 class="mb-4" style="font-weight: 700; color: var(--primary-color); letter-spacing: 0.5px;">
+            <i class="fas fa-thumbs-up me-2"></i>Rekomendasi Produk
+        </h4>
+        <div class="row g-4">
+            <?php foreach ($rekomendasi_produk as $related): ?>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a class="card h-100 border-0 shadow-sm related-product-card text-decoration-none" 
+                       href="<?= base_url('produk/' . $related['id_produk']) ?>" 
+                       style="transition: box-shadow .2s, transform .2s;">
+                        <div class="position-relative">
+                            <img src="<?= base_url('uploads/produk/') . ($related['nama_gambar'] ?? 'image-placeholder.jpg') ?>"
+                                 class="card-img-top rounded-top"
+                                 alt="<?= $related['pd_nama'] ?>"
+                                 style="aspect-ratio: 4/3; object-fit: cover; background: #f8fafc;">
+                            <?php if (!empty($related['persentase']) && $related['persentase'] > 0): ?>
+                                <span class="position-absolute top-0 start-0 badge bg-danger rounded-end px-3 py-2" style="font-size: 0.9rem; font-weight: 600;">
+                                    -<?= $related['persentase'] ?>%
+                                </span>
+                            <?php endif; ?>
+                        </div>
+                        <div class="card-body pb-3">
+                            <h6 class="card-title mb-2" style="font-weight: 600; color: var(--dark-color); min-height: 15px;">
+                                <?= $related['pd_nama'] ?>
+                            </h6>
+                            <div class="d-flex align-items-center mb-2">
+                                <?php if (!empty($related['harga_akhir']) && $related['harga_akhir'] < $related['harga']): ?>
+                                    <span class="text-muted text-decoration-line-through me-2" style="font-size: 0.95rem;">
+                                        Rp <?= number_format($related['harga']) ?>
+                                    </span>
+                                    <span class="fw-bold text-danger" style="font-size: 1.1rem;">
+                                        Rp <?= number_format($related['harga_akhir']) ?>
+                                    </span>
+                                <?php else: ?>
+                                    <span class="fw-bold text-primary" style="font-size: 1.1rem;">
+                                        Rp <?= number_format($related['harga']) ?>
+                                    </span>
+                                <?php endif; ?>
+                            </div>
+                            <div class="d-flex align-items-center" style="font-size: 0.95rem;">
+                                <span class="text-success"><?= $related['stok'] > 0 ? 'Ready Stock' : 'Out of Stock' ?></span>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <img src="https://via.placeholder.com/300" class="card-img-top" alt="Related Product">
-                    <div class="card-body">
-                        <h5 class="card-title">Whiskas Kitten</h5>
-                        <p class="card-text text-danger fw-bold">Rp 95,000</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <img src="https://via.placeholder.com/300" class="card-img-top" alt="Related Product">
-                    <div class="card-body">
-                        <h5 class="card-title">Pro Plan Kitten</h5>
-                        <p class="card-text text-danger fw-bold">Rp 135,000</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <img src="https://via.placeholder.com/300" class="card-img-top" alt="Related Product">
-                    <div class="card-body">
-                        <h5 class="card-title">Friskies Kitten</h5>
-                        <p class="card-text text-danger fw-bold">Rp 85,000</p>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
+    <style>
+        .related-product-card:hover {
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.10), 0 1.5px 4px rgba(0,0,0,0.04);
+            transform: translateY(-4px) scale(1.025);
+            border-color: var(--primary-color);
+        }
+        .related-product-card .card-title {
+            transition: color .2s;
+        }
+        .related-product-card:hover .card-title {
+            color: var(--primary-color);
+        }
+    </style>
 </div>
 
 <!-- Image Zoom Modal -->

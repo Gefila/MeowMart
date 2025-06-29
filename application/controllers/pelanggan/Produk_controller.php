@@ -76,6 +76,7 @@ class Produk_controller extends CI_Controller {
         $data['list_gambar'] = $this->Produk_gambar_model->get_by_produk_id($id);
         $data['kategori'] = $this->Produk_kategori_model->get_by_id($produk['categori_id']);
         $data['list_kategori'] = $this->Produk_kategori_model->get_all();
+        $data['rekomendasi_produk'] = $this->Produk_model->get_random_produk();
         $this->load->view('pelanggan/templates/header', $data);
         $this->load->view('pelanggan/produk_detail', $data);
         $this->load->view('pelanggan/templates/footer');

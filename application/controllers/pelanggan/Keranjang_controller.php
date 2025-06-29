@@ -17,21 +17,25 @@ class Keranjang_controller extends CI_Controller {
     public function index() {
         $pelanggan_id = $this->session->userdata('id');
         $keranjang = $this->Keranjang_model->get_by_pelanggan($pelanggan_id);
-        if (!$keranjang) {
-            swal('info', 'Keranjang Kosong', 'Silahkan Tambahkan Produk ke Keranjang');
-            redirect(base_url());
+
+        $data['list_kategori'] = $this->Produk_kategori_model->get_all();
+
+        if (empty($keranjang)) {
+            $data['total'] = 0;
+            $data['keranjang_id'] = null;
+            $data['produk'] = [];
+        } else {
+            $keranjang_id = $keranjang[0]['id_keranjang'];
+            $produk = $this->Keranjang_model->get_detail_keranjang($keranjang_id);
+            $total = array_reduce($produk, function($carry, $item) {
+                return $carry + ($item['harga_akhir'] * $item['jumlah']);
+            }, 0);
+
+            $data['total'] = $total;
+            $data['keranjang_id'] = $keranjang_id;
+            $data['produk'] = $produk;
         }
 
-        $keranjang_id = $keranjang[0]['id_keranjang'];
-        $produk = $this->Keranjang_model->get_detail_keranjang($keranjang_id);
-        $total = 0;
-        foreach ($produk as $item) {
-            $total += $item['harga_akhir'] * $item['jumlah'];
-        }
-        $data['total'] = $total;
-        $data['keranjang_id'] = $keranjang[0]['id_keranjang'];
-        $data['produk'] = $produk;
-        $data['list_kategori'] = $this->Produk_kategori_model->get_all();
         $this->load->view('pelanggan/templates/header', $data);
         $this->load->view('pelanggan/keranjang', $data);
         $this->load->view('pelanggan/templates/footer');

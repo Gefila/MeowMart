@@ -65,7 +65,7 @@ class Keranjang_model extends CI_Model
         $keranjang_produk = $this->Keranjang_produk_model->get_by_keranjang($id_keranjang);
         $produk = [];
         foreach ($keranjang_produk as $item) {
-            $produk_item = $this->Produk_model->get_produk_by_id($item['produk_id']);
+            $produk_item = $this->Produk_model->get_produk_by_id_with_diskon($item['produk_id']);
             if ($produk_item) {
                 $produk_item['jumlah'] = $item['jumlah'];
                 $produk_item['gambar'] = $this->Produk_gambar_model->get_by_produk_id($produk_item['id_produk']);
