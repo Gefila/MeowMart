@@ -28,7 +28,7 @@
   				<div class="card card-body">
   					<div class="form-group ">
   						<label for="nama_produk">Nama Produk</label>
-  						<input type="text" class="form-control <?= (form_error('nama_produk')) ? 'is-invalid' : ''; ?>" id="nama_produk" name="nama_produk" placeholder="Masukkan Produk" value="<?= $produk['nama'] ?>">
+  						<input type="text" class="form-control <?= (form_error('nama_produk')) ? 'is-invalid' : ''; ?>" id="nama_produk" name="nama_produk" placeholder="Masukkan Produk" value="<?= $produk['pd_nama'] ?>">
   						<small class="text-danger mb-0"><?= strip_tags(form_error('nama_produk')); ?></small>
   					</div>
   					<div class="form-group ">

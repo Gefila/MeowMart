@@ -71,10 +71,11 @@ $route['admin/produk/hapus/(:num)'] = 'administrator/Produk_controller/hapus_pro
 $route['admin/produk/ubah_gambar/(:num)'] = 'administrator/Produk_controller/ubah_gambar/$1';
 $route['admin/produk/hapus_gambar/(:num)'] = 'administrator/Produk_controller/hapus_gambar/$1';
 
-#produk_diskon
-$route['admin/produk_diskon'] = 'administrator/Produk_diskon_Controller085/index';
-$route['admin/produk_diskon/tambah'] = 'administrator/Produk_diskon_Controller085/tambah_produk_diskon';
-$route['admin/produk_diskon/hapus/(:num)'] = 'administrator/Produk_diskon_Controller085/hapus_produk_diskon/$1';
+#diskon
+$route['admin/diskon'] = 'administrator/Diskon_controller/index';
+$route['admin/diskon/tambah'] = 'administrator/Diskon_controller/tambah_diskon';
+$route['admin/diskon/hapus/(:num)'] = 'administrator/Diskon_controller/hapus_diskon/$1';
+$route['admin/diskon/ubah/(:num)'] = 'administrator/Diskon_controller/ubah_diskon/$1';
 
 #pelanggan
 $route['login'] = 'pelanggan/Pelanggan_controller/login';
@@ -84,5 +85,29 @@ $route['profil'] = 'pelanggan/Pelanggan_controller/profil';
 $route['profil/ubah'] = 'pelanggan/Pelanggan_controller/ubah_profil';
 
 #produk
-$route['produk'] = 'pelanggan/Produk_controller/detail';
+$route['produk'] = 'pelanggan/Produk_controller/index';
 $route['produk/(:num)'] = 'pelanggan/Produk_controller/detail/$1';
+$route['produk/kategori/(:num)'] = 'pelanggan/Produk_controller/kategori/$1';
+
+#keranjang
+$route['keranjang'] = 'pelanggan/Keranjang_controller/index';
+$route['keranjang/tambah'] = 'pelanggan/Keranjang_controller/tambah';
+$route['keranjang/ubah'] = 'pelanggan/Keranjang_controller/ubah_keranjang';
+$route['keranjang/hapus'] = 'pelanggan/Keranjang_controller/hapus_produk_keranjang';
+
+#pesanan
+$route['pesanan'] = 'pelanggan/Pesanan_controller/index';
+$route['pesanan/detail/(:num)'] = 'pelanggan/Pesanan_controller/detail/$1';
+$route['pesanan/tambah'] = 'pelanggan/Pesanan_controller/tambah_pesanan';
+
+#pembayaran
+$route['pembayaran/(:num)'] = 'pelanggan/Pembayaran_controller/index/$1';
+$route['pembayaran/bayar'] = 'pelanggan/Pembayaran_controller/bayar';
+
+#pesanan admin
+$route['admin/pesanan'] = 'administrator/Pesanan_controller/index';
+$route['admin/pesanan/detail/(:num)'] = 'administrator/Pesanan_controller/detail/$1';
+$route['admin/pesanan/update_status_pesanan'] = 'administrator/Pesanan_controller/update_status_pesanan';
+$route['admin/pesanan/update_status_pembayaran'] = 'administrator/Pesanan_controller/update_status_pembayaran';
+$route['admin/pesanan/cetak/(:num)'] = 'administrator/Pesanan_controller/cetak/$1';
+

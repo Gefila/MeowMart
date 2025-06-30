@@ -29,6 +29,8 @@
   <script src="<?= base_url('assets/') ?>dist/js/adminlte.min.js"></script>
   <!-- Dark Mode -->
   <script src="<?= base_url('assets/') ?>dist/js/darkmode.js"></script>
+  <!-- Select2 -->
+  <script src="<?= base_url('assets/') ?>/plugins/select2/js/select2.full.min.js"></script>
   </body>
 
   </html>

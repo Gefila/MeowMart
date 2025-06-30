@@ -1,33 +1,32 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pelanggan_controller extends CI_Controller
-{
-    public function __construct()
-    {
+class Pelanggan_controller extends CI_Controller {
+    public function __construct() {
         parent::__construct();
         $this->load->model('Pelanggan_model');
+        $this->load->model('Produk_kategori_model');
     }
 
-    public function login()
-    {
+    public function login() {
         if ($this->session->has_userdata('pelanggan_login')) {
             redirect(base_url());
             die;
         }
         $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
+        $data['list_kategori'] = $this->Produk_kategori_model->get_all();
+
         if ($this->form_validation->run() !== FALSE) {
             $this->__login();
         } else {
-            $this->load->view('pelanggan/templates/header');
+            $this->load->view('pelanggan/templates/header', $data);
             $this->load->view('pelanggan/pelanggan_login');
             $this->load->view('pelanggan/templates/footer');
         }
     }
 
-    public function __login()
-    {
+    public function __login() {
         $email = $this->input->post('email');
         $password = md5($this->input->post('password'));
         $check = $this->Pelanggan_model->check_login($email, $password);
@@ -41,30 +40,18 @@ class Pelanggan_controller extends CI_Controller
             $this->session->set_userdata($session_data);
             redirect(base_url());
         } else {
-            $this->session->set_flashdata('message', "
-                <script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Login Gagal',
-                        text: 'Email atau Password salah!',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                </script>
-            ");
+            swal('error', 'Login Gagal', 'Email atau Password salah!');
         }
         redirect('login');
     }
 
-    public function logout()
-    {
+    public function logout() {
         $session_data = array('id', 'email', 'nama', 'pelanggan_login');
         $this->session->unset_userdata($session_data);
         redirect(base_url());
     }
 
-    public function register()
-    {
+    public function register() {
         if ($this->session->has_userdata('pelanggan_login')) {
             redirect(base_url());
             die;
@@ -81,14 +68,14 @@ class Pelanggan_controller extends CI_Controller
         if ($this->form_validation->run() !== FALSE) {
             $this->__register();
         } else {
-            $this->load->view('pelanggan/templates/header');
+            $data['list_kategori'] = $this->Produk_kategori_model->get_all();
+            $this->load->view('pelanggan/templates/header', $data);
             $this->load->view('pelanggan/pelanggan_register');
             $this->load->view('pelanggan/templates/footer');
         }
     }
 
-    public function __register()
-    {
+    public function __register() {
         $email = $this->input->post('email');
         if (!($this->Pelanggan_model->get_by_email($email))) {
             $data = [
@@ -104,58 +91,30 @@ class Pelanggan_controller extends CI_Controller
 
             $simpan = $this->Pelanggan_model->tambah($data);
             if ($simpan) {
-                $this->session->set_flashdata('message', "
-                    <script>
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Registrasi Berhasil',
-                            text: 'Silahkan login untuk melanjutkan.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    </script>");
+                swal('success', 'Registrasi Berhasil', 'Silahkan login untuk melanjutkan.', base_url('login'));
             } else {
-                $this->session->set_flashdata('message', "
-                <script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Registrasi Gagal',
-                        text: 'Terjadi kesalahan saat menyimpan data, silahkan coba lagi.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                </script>");
+                swal('error', 'Registrasi Gagal', 'Terjadi kesalahan saat menyimpan data, silahkan coba lagi.');
             }
         } else {
-            $this->session->set_flashdata('message', "
-                <script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Email Sudah Terdaftar',
-                        text: 'Silahkan gunakan email lain.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                </script>");
+            swal('error', 'Email Sudah Terdaftar', 'Silahkan gunakan email lain.');
         }
         redirect('register');
     }
 
-    public function profil()
-    {
+    public function profil() {
         if (!$this->session->has_userdata('pelanggan_login')) {
             redirect(base_url());
             die;
         }
 
         $data['data_pelanggan'] = $this->Pelanggan_model->get_by_id($this->session->userdata('id'));
+        $data['list_kategori'] = $this->Produk_kategori_model->get_all();
         $this->load->view('pelanggan/templates/header', $data);
         $this->load->view('pelanggan/pelanggan_profil', $data);
         $this->load->view('pelanggan/templates/footer');
     }
 
-    public function ubah_profil()
-    {
+    public function ubah_profil() {
         if (!$this->session->has_userdata('pelanggan_login')) {
             redirect(base_url());
             die;
@@ -191,50 +150,21 @@ class Pelanggan_controller extends CI_Controller
                         unlink('uploads/profil-pelanggan/' . $pelanggan['foto_pelanggan']);
                     }
                 } else {
-                    $this->session->set_flashdata('message', "
-                    <script>
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal Mengunggah Foto',
-                            text: '{$this->upload->display_errors()}',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    </script>
-                    ");
+                    swal('error', 'Gagal Mengunggah Foto', $this->upload->display_errors());
                     redirect('profil/ubah');
                     return;
                 }
             }
             $ubah = $this->Pelanggan_model->ubah($data, $this->session->userdata('id'));
             if ($ubah) {
-                $this->session->set_flashdata('message', "
-                <script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Profil Berhasil Diubah',
-                        text: 'Perubahan profil berhasil disimpan.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                </script>
-                ");
+                swal('success', 'Profil Berhasil Diubah', 'Perubahan profil berhasil disimpan.');
             } else {
-                $this->session->set_flashdata('message', "
-                <script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal Mengubah Profil',
-                        text: 'Terjadi kesalahan saat menyimpan perubahan, silahkan coba lagi.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                </script>
-                ");
+                swal('error', 'Gagal Mengubah Profil', 'Terjadi kesalahan saat menyimpan perubahan, silahkan coba lagi.');
             }
             redirect('profil');
         } else {
             $data['data_pelanggan'] = $this->Pelanggan_model->get_by_id($this->session->userdata('id'));
+            $data['list_kategori'] = $this->Produk_kategori_model->get_all();
             $this->load->view('pelanggan/templates/header', $data);
             $this->load->view('pelanggan/pelanggan_profil_ubah', $data);
             $this->load->view('pelanggan/templates/footer');
