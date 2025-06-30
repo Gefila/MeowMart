@@ -10,6 +10,7 @@ class Pembayaran_controller extends CI_Controller {
         $this->load->model('Pesanan_produk_model');
         $this->load->model('Produk_model');
         $this->load->model('Produk_gambar_model');
+        $this->load->model('Produk_kategori_model');
         cek_pelanggan_login();
     }
 
@@ -37,7 +38,9 @@ class Pembayaran_controller extends CI_Controller {
         $data['pesanan'] = $pesanan;
         $data['produk'] = $produk_data;
         $data['pembayaran'] = $this->Pembayaran_model->get_by_pesanan_id($id_pesanan);
-        $this->load->view('pelanggan/templates/header');
+        $data['list_kategori'] = $this->Produk_kategori_model->get_all();
+
+        $this->load->view('pelanggan/templates/header', $data);
         $this->load->view('pelanggan/pembayaran', $data);
         $this->load->view('pelanggan/templates/footer');
     }
@@ -75,7 +78,7 @@ class Pembayaran_controller extends CI_Controller {
         }
 
         $upload_data = $this->upload->data();
-        $bukti = 'uploads/bukti-pembayaran/' . $upload_data['file_name'];
+        $bukti = $upload_data['file_name'];
 
         $data = [
             'pesanan_id' => $id_pesanan,

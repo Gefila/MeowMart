@@ -104,18 +104,6 @@ class Produk_model extends CI_Model {
         return $query->result_array();
     }
 
-    public function get_all_produk_with_diskon($id) {
-        $id = (int) $id; // untuk keamanan
-        $subquery = '(SELECT produk_id, diskon_id FROM produk_diskon WHERE diskon_id = ' . $id . ') AS pd_diskon';
-
-        $this->db->select('produk.id_produk, produk.nama as pd_nama, produk.stok, produk.deskripsi, produk.harga, kategori.nama as kt_nama, pd_diskon.diskon_id');
-        $this->db->from('produk');
-        $this->db->join('kategori', 'kategori.id_kategori = produk.categori_id', 'left');
-        $this->db->join($subquery, 'pd_diskon.produk_id = produk.id_produk', 'left');
-
-        return $this->db->get()->result_array();
-    }
-
     public function get_produk_by_id_with_diskon($id) {
         $this->db->select('produk.id_produk, produk.nama as pd_nama, produk.stok, produk.deskripsi, produk.harga, kategori.nama as kt_nama, diskon.id as diskon_id, diskon.nama as nama_diskon, diskon.persentase, diskon.tanggal_mulai, diskon.tanggal_akhir');
         $this->db->from($this->_table);
