@@ -122,3 +122,22 @@ if (! function_exists('indo_datetime')) {
         return $formatted_date;
     }
 }
+
+function is_active_sidebar($segment1 = '', $segment2 = '')
+{
+    $CI = &get_instance();
+    $uri1 = $CI->uri->segment(1);
+    $uri2 = $CI->uri->segment(2);
+
+    if ($segment1 && !$segment2) {
+        // hanya aktif kalau segment 1 cocok dan tidak ada segment 2
+        return ($uri1 === $segment1 && $uri2 === null) ? 'active' : '';
+    } elseif (!$segment1 && $segment2) {
+        return ($uri2 === $segment2) ? 'active' : '';
+    } elseif ($segment1 && $segment2) {
+        return ($uri1 === $segment1 && $uri2 === $segment2) ? 'active' : '';
+    }
+
+    return '';
+}
+
