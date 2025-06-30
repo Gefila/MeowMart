@@ -107,7 +107,20 @@
                                 </tr>
                                 <tr>
                                     <th>Status Pembayaran</th>
-                                    <td><?= isset($pesanan['pembayaran']['status']) ? ucfirst($pesanan['pembayaran']['status']) : 'Belum Melakukan Pembayaran' ?></td>
+                                    <td>
+                                        <?php if (empty($pesanan['pembayaran'])): ?>
+                                            <span class="text-danger">Belum ada pembayaran</span>
+                                        <?php else: ?>
+                                        <form action="<?= base_url('admin/pesanan/update_status_pembayaran') ?>" method="post">
+                                            <input type="hidden" name="id_pesanan" value="<?= $pesanan['id_pesanan'] ?>">
+                                            <select name="status" class="form-control" onchange="this.form.submit()">
+                                                <option value="pending" <?= $pesanan['pembayaran']['status'] == 'pending' ? 'selected' : '' ?>>Pending</option>
+                                                <option value="terverifikasi" <?= $pesanan['pembayaran']['status'] == 'terverifikasi' ? 'selected' : '' ?>>Terverifikasi</option>
+                                                <option value="gagal" <?= $pesanan['pembayaran']['status'] == 'gagal' ? 'selected' : '' ?>>Gagal</option>
+                                            </select>
+                                        </form>
+                                        <?php endif; ?>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Bukti Pembayaran</th>

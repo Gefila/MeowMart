@@ -19,4 +19,9 @@ class Pembayaran_model extends CI_Model {
         $this->db->insert($this->_table, $data);
         return ($this->db->affected_rows() !== 1) ? false : true;
     }
+
+    public function update_status_pembayaran($id_pesanan, $status) {
+        $this->db->where('pesanan_id', $id_pesanan);
+        return $this->db->update($this->_table, ['status' => $status]);
+    }
 }

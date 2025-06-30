@@ -30,7 +30,8 @@
                             <th>Nama Pelanggan</th>
                             <th>Tanggal Pesanan</th>
                             <th>Total Pembayaran</th>
-                            <th>Status</th>
+                            <th>Status Pesanan</th>
+                            <th>Status Pembayaran</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -43,7 +44,7 @@
                                 <td>Rp. <?= number_format($p['total_pesanan'], 0, ',', '.') ?></td>
                                 <td>
                                     <?php
-                                    $status = $p['status'];
+                                    $status = $p['status_pesanan'];
                                     $badgeClass = 'secondary';
                                     if ($status == 'pending') {
                                         $badgeClass = 'warning';
@@ -61,6 +62,23 @@
                                         <?= ucfirst($status) ?>
                                     </span>
                                 </td>
+                                <td>
+                                    <?php
+                                    $statusPembayaran = $p['status_pembayaran'] == NULL ? 'Belum' : $p['status_pembayaran'];
+                                    $badgePembayaranClass = 'secondary';
+                                    if ($statusPembayaran == 'Belum') {
+                                        $badgePembayaranClass = 'danger';
+                                    } elseif ($statusPembayaran == 'pending') {
+                                        $badgePembayaranClass = 'warning';
+                                    } elseif ($statusPembayaran == 'terverifikasi') {
+                                        $badgePembayaranClass = 'success';
+                                    } elseif ($statusPembayaran == 'gagal') {
+                                        $badgePembayaranClass = 'danger';
+                                    }
+                                    ?>
+                                    <span class="badge badge-<?= $badgePembayaranClass ?>">
+                                        <?= ucfirst($statusPembayaran) ?>
+                                    </span>
                                 <td>
                                     <a href="<?= base_url('admin/pesanan/detail/' . $p['id_pesanan']) ?>" class="btn btn-info btn-sm">Detail</a>
                                     <a href="<?= base_url('admin/pesanan/cetak/' . $p['id_pesanan']) ?>" class="btn btn-success btn-sm" target="_blank">Cetak</a>

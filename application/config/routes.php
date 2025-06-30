@@ -107,6 +107,7 @@ $route['pembayaran/bayar'] = 'pelanggan/Pembayaran_controller/bayar';
 #pesanan admin
 $route['admin/pesanan'] = 'administrator/Pesanan_controller/index';
 $route['admin/pesanan/detail/(:num)'] = 'administrator/Pesanan_controller/detail/$1';
-$route['admin/pesanan/update_status'] = 'administrator/Pesanan_controller/update_status';
+$route['admin/pesanan/update_status_pesanan'] = 'administrator/Pesanan_controller/update_status_pesanan';
+$route['admin/pesanan/update_status_pembayaran'] = 'administrator/Pesanan_controller/update_status_pembayaran';
 $route['admin/pesanan/cetak/(:num)'] = 'administrator/Pesanan_controller/cetak/$1';
 
