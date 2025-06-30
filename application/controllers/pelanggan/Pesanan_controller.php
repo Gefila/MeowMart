@@ -35,7 +35,7 @@ class Pesanan_controller extends CI_Controller {
                     $gambar_produk = $this->Produk_gambar_model->get_by_produk_id($produk_item['produk_id']);
                     $produk_item['harga'] = $produk_item['harga_saat_pembelian'];
                     $produk_item['nama_produk'] = $produk['pd_nama'];
-                    $produk_item['gambar'] = !empty($gambar_produk) ? base_url('uploads/produk/' . $gambar_produk[0]['nama_gambar']) : null;
+                    $produk_item['gambar'] = !empty($gambar_produk) ? base_url('uploads/produk/' . $gambar_produk[0]['nama_gambar']) : base_url('uploads/produk/' .'image-placeholder.jpg');
                     $produk_data[] = $produk_item;
                 }
             }
@@ -81,7 +81,7 @@ class Pesanan_controller extends CI_Controller {
                 $gambar_produk = $this->Produk_gambar_model->get_by_produk_id($item['produk_id']);
                 $item['harga'] = $item['harga_saat_pembelian'];
                 $item['nama_produk'] = $produk['pd_nama'];
-                $item['gambar'] = !empty($gambar_produk) ? base_url('uploads/produk/' . $gambar_produk[0]['nama_gambar']) : null;
+                $item['gambar'] = !empty($gambar_produk) ? base_url('uploads/produk/' . $gambar_produk[0]['nama_gambar']) : base_url('uploads/produk/' . 'image-placeholder.jpg');
                 $produk_data[] = $item;
             }
         }

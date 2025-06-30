@@ -76,17 +76,11 @@
                       <a href="#" class="nav-link <?= is_active('admin', 'pelanggan') ?>">
                           <i class="nav-icon fas fa-users"></i>
                           <p>
-                              Pelanggan
+                              Transaksi
                               <i class="right fas fa-angle-left"></i>
                           </p>
                       </a>
                       <ul class="nav nav-treeview">
-                          <li class="nav-item">
-                              <a href="<?= base_url() ?>admin/transaksi" class="nav-link <?= ($this->uri->segment(2) == 'transaksi') ? 'active' : '' ?>">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>Transaksi</p>
-                              </a>
-                          </li>
                           <li class="nav-item">
                               <a href="<?= base_url() ?>admin/pesanan" class="nav-link <?= ($this->uri->segment(2) == 'pesanan') ? 'active' : '' ?>">
                                   <i class="far fa-circle nav-icon"></i>
