@@ -71,3 +71,54 @@ if (! function_exists('indo_date')) {
         return $formatted_date;
     }
 }
+
+if (! function_exists('indo_datetime')) {
+    function indo_datetime($datetime, $include_day = false, $include_time = true) {
+        if (!$datetime || $datetime == '0000-00-00 00:00:00' || $datetime == '0000-00-00') return '';
+
+        $days = array(
+            'Sunday'    => 'Minggu',
+            'Monday'    => 'Senin',
+            'Tuesday'   => 'Selasa',
+            'Wednesday' => 'Rabu',
+            'Thursday'  => 'Kamis',
+            'Friday'    => 'Jumat',
+            'Saturday'  => 'Sabtu'
+        );
+
+        $months = array(
+            '01' => 'Januari',
+            '02' => 'Februari',
+            '03' => 'Maret',
+            '04' => 'April',
+            '05' => 'Mei',
+            '06' => 'Juni',
+            '07' => 'Juli',
+            '08' => 'Agustus',
+            '09' => 'September',
+            '10' => 'Oktober',
+            '11' => 'November',
+            '12' => 'Desember'
+        );
+
+        $timestamp = strtotime($datetime);
+
+        $tanggal   = date('d', $timestamp);
+        $bulan     = date('m', $timestamp);
+        $tahun     = date('Y', $timestamp);
+        $jam       = date('H:i', $timestamp);
+        $nama_hari = date('l', $timestamp);
+
+        $formatted_date = (int)$tanggal . ' ' . $months[$bulan] . ' ' . $tahun;
+
+        if ($include_day) {
+            $formatted_date = $days[$nama_hari] . ', ' . $formatted_date;
+        }
+
+        if ($include_time) {
+            $formatted_date .= ' ' . $jam;
+        }
+
+        return $formatted_date;
+    }
+}

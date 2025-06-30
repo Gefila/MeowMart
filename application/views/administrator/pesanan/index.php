@@ -39,7 +39,7 @@
                             <tr>
                                 <td><?= $p['id_pesanan'] ?></td>
                                 <td><?= $p['nama_pelanggan'] ?></td>
-                                <td><?= date('d-m-Y H:i:s', strtotime($p['tanggal_pesanan'])) ?></td>
+                                <td><?= indo_datetime($p['tanggal_pesanan']); ?></td>
                                 <td>Rp. <?= number_format($p['total_pesanan'], 0, ',', '.') ?></td>
                                 <td>
                                     <?php

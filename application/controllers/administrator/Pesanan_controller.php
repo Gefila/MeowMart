@@ -44,4 +44,17 @@ class Pesanan_controller extends CI_Controller {
         }
         redirect('admin/pesanan/detail/' . $id_pesanan);
     }
+
+    public function cetak($id_pesanan) {
+        $data['title'] = 'Gefila Store - Cetak Pesanan';
+        $pesanan = $this->Pesanan_model->get_pesanan_by_id($id_pesanan);
+
+        if (!$pesanan) {
+            show_404();
+        }
+
+        $data['pesanan'] = $pesanan;
+
+        $this->load->view('administrator/pesanan/cetak', $data);
+    }
 }
