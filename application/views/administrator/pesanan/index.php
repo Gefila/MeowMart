@@ -23,7 +23,7 @@
                 <?php if ($this->session->flashdata('message')) : ?>
                     <?= $this->session->flashdata('message'); ?>
                 <?php endif; ?>
-                <table class="table table-striped">
+                <table class="table table-striped" id="pesananTable" style="margin-top: 0px !important; margin-bottom: 0px !important;">
                     <thead>
                         <tr>
                             <th>ID Pesanan</th>
@@ -91,3 +91,20 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function() {
+        $("#pesananTable").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "searching": false,
+            "paging": false,
+            "info": false,
+            "columnDefs": [{
+                "targets": [6],
+                "orderable": false
+            }],
+        }).buttons().container().appendTo('#pesananTable_wrapper .col-md-6:eq(0)');
+    });
+</script>

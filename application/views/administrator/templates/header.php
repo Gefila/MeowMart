@@ -24,6 +24,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script src="<?= base_url('assets/') ?>plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <script src="<?= base_url('assets/') ?>plugins/jquery/jquery-1.11.0.min.js"></script>
+
+    <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini dark-mode layout-navbar-fixed layout-fixed">
