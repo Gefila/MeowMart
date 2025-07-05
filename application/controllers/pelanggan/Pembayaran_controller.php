@@ -11,6 +11,11 @@ class Pembayaran_controller extends CI_Controller {
         $this->load->model('Produk_model');
         $this->load->model('Produk_gambar_model');
         $this->load->model('Produk_kategori_model');
+        $this->config->load('midtrans');
+        \Midtrans\Config::$serverKey = $this->config->item('midtrans_server_key');
+        \Midtrans\Config::$isProduction = $this->config->item('midtrans_is_production');
+        \Midtrans\Config::$isSanitized = $this->config->item('midtrans_sanitized');
+        \Midtrans\Config::$is3ds = $this->config->item('midtrans_3ds');
         cek_pelanggan_login();
     }
 
