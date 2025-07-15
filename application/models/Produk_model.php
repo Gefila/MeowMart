@@ -116,7 +116,7 @@ class Produk_model extends CI_Model {
         if (count($produk) === 1) {
             return $produk[0];
         } else {
-            return filter_diskon_terbesar_dan_aktif($produk);
+            return filter_diskon_terbesar_dan_aktif($produk) ? filter_diskon_terbesar_dan_aktif($produk) : $produk[0];
         }
     }
 
