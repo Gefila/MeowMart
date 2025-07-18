@@ -12,6 +12,14 @@ class Pesanan_controller extends CI_Controller {
         $this->load->model('Pesanan_produk_model');
         $this->load->model('Pembayaran_model');
         $this->load->model('Produk_kategori_model');
+        $this->load->model('Pelanggan_model');
+
+
+        $this->config->load('midtrans');
+        \Midtrans\Config::$serverKey = $this->config->item('midtrans_server_key');
+        \Midtrans\Config::$isProduction = $this->config->item('midtrans_is_production');
+        \Midtrans\Config::$isSanitized = $this->config->item('midtrans_sanitized');
+        \Midtrans\Config::$is3ds = $this->config->item('midtrans_3ds');
         cek_pelanggan_login();
     }
 
@@ -35,7 +43,7 @@ class Pesanan_controller extends CI_Controller {
                     $gambar_produk = $this->Produk_gambar_model->get_by_produk_id($produk_item['produk_id']);
                     $produk_item['harga'] = $produk_item['harga_saat_pembelian'];
                     $produk_item['nama_produk'] = $produk['pd_nama'];
-                    $produk_item['gambar'] = !empty($gambar_produk) ? base_url('uploads/produk/' . $gambar_produk[0]['nama_gambar']) : base_url('uploads/produk/' .'image-placeholder.jpg');
+                    $produk_item['gambar'] = !empty($gambar_produk) ? base_url('uploads/produk/' . $gambar_produk[0]['nama_gambar']) : base_url('uploads/produk/' . 'image-placeholder.jpg');
                     $produk_data[] = $produk_item;
                 }
             }
@@ -58,6 +66,7 @@ class Pesanan_controller extends CI_Controller {
             swal('error', 'Gagal membuat pesanan', $result['message']);
             redirect('keranjang');
         } else {
+            $this->pembayaran($result['id_pesanan']);
             swal('success', 'Pesanan berhasil ditambahkan', 'Pesanan Anda telah berhasil dibuat. Silahkan lakukan pembayaran untuk menyelesaikan proses pembelian.');
             redirect('pesanan/detail/' . $result['id_pesanan']);
         }
@@ -100,4 +109,39 @@ class Pesanan_controller extends CI_Controller {
         $this->load->view('pelanggan/pesanan_detail', $data);
         $this->load->view('pelanggan/templates/footer');
     }
+
+    public function pembayaran($id_pesanan) {
+        $pesanan = $this->Pesanan_model->get_by_id($id_pesanan);
+        $pelanggan = $this->Pelanggan_model->get_by_id($pesanan['pelanggan_id']);
+        $order_id = 'order-' . $pesanan['id_pesanan'];
+
+        $params = [
+            'transaction_details' => [
+                'order_id' => 'order_id-1',
+                'gross_amount' => $pesanan['total_pesanan'],
+            ],
+            'customer_details' => [
+                'first_name' => $pelanggan['nama_depan'],
+                'last_name' => $pelanggan['nama_belakang'],
+                'email' => $pelanggan['email'],
+                'phone' => $pelanggan['telepon'],
+            ],
+            'enabled_payments' => ['gopay', 'shopee'],
+        ];
+
+        $token = \Midtrans\Snap::getSnapToken($params);
+        
+        $data = [
+            'pesanan_id' => $id_pesanan,
+            'order_id' => $order_id,
+            'total_bayar' => $pesanan['total_pesanan'],
+            'bukti_pembayaran' => null,
+            'tanggal_pembayaran' => null,
+            'status' => 'pending',
+            'snap_token' => $token,
+        ];
+        $this->Pembayaran_model->tambah($data);
+    }
+
+
 }

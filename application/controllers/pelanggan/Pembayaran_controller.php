@@ -101,4 +101,34 @@ class Pembayaran_controller extends CI_Controller {
 
         redirect('pesanan/detail/' . $id_pesanan);
     }
+
+    public function update_status_pembayaran() {
+        $this->form_validation->set_rules('id_pembayaran', 'ID Pembayaran', 'required');
+        if ($this->form_validation->run() === FALSE) {
+            swal('error', 'Validasi Gagal', 'Mohon lengkapi semua field yang diperlukan.');
+            redirect('pesanan');
+            return;
+        }
+        $id_pembayaran = $this->input->post('id_pembayaran');
+        $id_pesanan = $this->input->post('id_pesanan');
+        $order_id = $this->input->post('order_id');
+
+        $status = \Midtrans\Transaction::status($order_id);
+
+        if ($status->transaction_status == 'settlement') {
+            $this->Pembayaran_model->update_status_pembayaran($id_pembayaran, 'terverifikasi');
+            $this->Pesanan_model->update_status_pesanan($id_pesanan, 'diproses');
+            swal('success', 'Pembayaran Berhasil', 'Pembayaran Anda telah berhasil diproses.');
+        } elseif ($status->transaction_status == 'pending') {
+            $this->Pembayaran_model->update_status_pembayaran($id_pembayaran, 'pending');
+            swal('info', 'Pembayaran Pending', 'Pembayaran Anda masih dalam proses.');
+        } else {
+            $this->Pembayaran_model->update_status_pembayaran($id_pembayaran, 'gagal');
+            $this->Pesanan_model->update_status_pesanan($id_pesanan, 'gagal');
+            swal('error', 'Pembayaran Gagal', 'Pembayaran Anda gagal. Silahkan coba lagi.');
+        }
+
+
+        redirect('pembayaran/' . $id_pesanan);
+    }
 }

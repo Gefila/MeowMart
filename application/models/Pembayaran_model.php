@@ -20,8 +20,8 @@ class Pembayaran_model extends CI_Model {
         return ($this->db->affected_rows() !== 1) ? false : true;
     }
 
-    public function update_status_pembayaran($id_pesanan, $status) {
-        $this->db->where('pesanan_id', $id_pesanan);
+    public function update_status_pembayaran($id_pembayaran, $status) {
+        $this->db->where('id_pembayaran', $id_pembayaran);
         return $this->db->update($this->_table, ['status' => $status]);
     }
 }

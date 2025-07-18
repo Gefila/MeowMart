@@ -481,7 +481,7 @@
     </div>
 
     <!-- Payment Information Section (Added) -->
-    <?php if (isset($pembayaran) && $pembayaran !== null) : ?>
+    <?php if (isset($pembayaran) && $pembayaran !== null && $pembayaran['bukti_pembayaran']  !== null) : ?>
         <div class="payment-card">
             <h5 class="mb-3">
                 <i class="fa-solid fa-credit-card me-2"></i>
