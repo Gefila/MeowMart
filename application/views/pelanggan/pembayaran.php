@@ -70,11 +70,11 @@
         <div class="col-lg-4">
             <!-- Payment Status Card -->
             <div class="card shadow-sm sticky-top" style="top: 20px;">
-                <div class="card-header bg-<?= $pembayaran ? 'success' : 'warning'; ?> text-white">
+                <div class="card-header bg-<?= ($pembayaran && $pembayaran['bukti_pembayaran'] !== null) ? 'success' : 'warning'; ?> text-white">
                     <h5 class="mb-0"><i class="fas fa-credit-card me-2"></i>Payment Status</h5>
                 </div>
                 <div class="card-body">
-                    <?php if ($pembayaran): ?>
+                    <?php if ($pembayaran && $pembayaran['bukti_pembayaran'] !== null): ?>
                         <div class="payment-status">
                             <div class="status-badge <?= $pembayaran['status']; ?> mb-3">
                                 <span><?= ucfirst($pembayaran['status']); ?></span>
@@ -113,9 +113,10 @@
                         <div class="payment-form">
                             <h6 class="mb-3">Complete Your Payment</h6>
                             <p class="text-muted small mb-4">Please upload your payment proof to complete the transaction.</p>
-
                             <form action="<?= base_url('pembayaran/bayar') ?>" method="post" enctype="multipart/form-data" id="paymentForm">
                                 <input type="hidden" name="id_pesanan" value="<?= $pesanan['id_pesanan']; ?>">
+                                <input type="hidden" name="id_pembayaran" value="<?= $pembayaran['id_pembayaran']; ?>">
+                                <input type="hidden" name="order_id" value="<?= $pembayaran['order_id']; ?>">
 
                                 <div class="mb-4">
                                     <label for="bukti_pembayaran" class="form-label">Upload Payment Proof</label>
@@ -158,8 +159,15 @@
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary w-100 py-2">
+                                <button type="submit" class="btn btn-primary w-100 py-2" id="uploadPaymentBtn">
                                     <i class="fas fa-paper-plane me-1"></i> Submit Payment
+                                </button>
+                                <button type="button" class="btn btn-secondary w-100 py-2 mt-2" id="qrisPaymentBtn">
+                                    <i class="fas fa-qrcode me-1"></i> Pay with QRIS
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary w-100 py-2 mt-2" id="checkStatus">
+                                    <i class="fas fa-sync-alt me-1"></i>
+                                    Check Status Qris
                                 </button>
                             </form>
                         </div>
@@ -290,8 +298,10 @@
     }
 </style>
 
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key='SB-Mid-client-yL1KsvjYvoXRmMGa'></script>
 
-<script>
+
+<script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
         const fileInput = document.getElementById('bukti_pembayaran');
         const previewContainer = document.getElementById('previewContainer');
@@ -318,5 +328,37 @@
                 imgPreview.classList.add('d-none');
             });
         }
+
+        const paymentForm = document.getElementById('paymentForm');
+
+        document.getElementById('qrisPaymentBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.snap.pay('<?= $pembayaran['snap_token']; ?>', {
+                onSuccess: function(result) {
+                    // Handle success response
+                    console.log('Payment Success:', result);
+                    paymentForm.action = '<?= base_url('pembayaran/update_status'); ?>';
+                    paymentForm.submit();
+                },
+                onPending: function(result) {
+                    // Handle pending response
+                    console.log('Payment Pending:', result);
+                    paymentForm.action = '<?= base_url('pembayaran/update_status'); ?>';
+                    paymentForm.submit();
+                },
+                onError: function(result) {
+                    // Handle error response
+                    console.error('Payment Error:', result);
+                    paymentForm.action = '<?= base_url('pembayaran/update_status'); ?>';
+                    paymentForm.submit();
+                }
+            });
+        });
+
+        document.getElementById('checkStatus').addEventListener('click', function() {
+
+            paymentForm.action = '<?= base_url('pembayaran/update_status'); ?>';
+            paymentForm.submit();
+        });
     });
 </script>
