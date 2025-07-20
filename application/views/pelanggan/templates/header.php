@@ -24,69 +24,15 @@
 
     <script src="<?= base_url('assets/') ?>plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <script src="<?= base_url('assets/') ?>plugins/jquery/jquery-1.11.0.min.js"></script>
+    <link rel="stylesheet" href="<?= base_url('assets/') ?>css/pelanggan.css">
+    <script src="<?= base_url('assets/') ?>js/pelanggan.js"></script>
 </head>
-
-<!-- Tambahkan ini di <head> jika belum -->
-<style>
-    .navbar-modern {
-        background: #f8f9fc;
-        transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-    }
-
-    .navbar-scrolled {
-        background-color: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .navbar-modern .nav-link {
-        color: #333 !important;
-        font-weight: 500;
-    }
-
-    .navbar-modern .nav-link:hover {
-        color: #0d6efd !important;
-    }
-
-    .navbar-modern .navbar-brand {
-        font-weight: bold;
-        color: #0d6efd !important;
-    }
-
-    .navbar-modern .dropdown-menu {
-        border-radius: 10px;
-        border: none;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    }
-
-    .navbar-modern .active{
-        color: #0d6efd !important;
-        font-weight: bold;
-    }
-</style>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const navbar = document.querySelector(".navbar");
-        const addScrollEffect = () => {
-            if (window.scrollY > 10) {
-                navbar.classList.add("navbar-scrolled");
-            } else {
-                navbar.classList.remove("navbar-scrolled");
-            }
-        };
-
-        addScrollEffect(); // Check on load
-        window.addEventListener("scroll", addScrollEffect);
-    });
-</script>
-
 
 <body class="sb-nav-fixed">
 
     <nav class="navbar navbar-expand-lg fixed-top navbar-modern">
         <div class="container">
-            <a class="navbar-brand" href="<?= base_url() ?>">Gefila Store</a>
+            <a class="navbar-brand" href="<?= base_url() ?>">MeowMart</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarEcom" aria-controls="navbarEcom" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
